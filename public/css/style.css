@@ -1,0 +1,59 @@
+/*** Polices installées ***/
+@font-face {
+    font-family: 'lifecraftregular';
+    src: url('../fonts/lifecraft_font-webfont.woff2') format('woff2'),
+         url('../fonts/lifecraft_font-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+body {
+	background-image: url('../img/backgroundwow.jpg');	
+	background-attachment: fixed;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+/*** Phoenix © Sulfuron ***/
+.titre {
+	padding: 90px 0 40px 0;
+	text-align: center;
+	font-family: 'lifecraftregular';
+	font-size: 70px;
+	text-shadow: 0 0 5px #686868;
+}
+
+.fontWow{
+	font-family: 'lifecraftregular';
+	font-size: 20px;
+}
+
+.bg-greyWow{
+	background-color: #e0e0d2;
+}
+
+.container-fluid{
+	padding-right: 150px;
+	padding-left: 150px;
+	height: 100vh;
+}
+
+.colorTest {
+	background-color:rgba(232,232,232,0.3);
+	height: 100%;
+}
+
+.whiteColor{
+	background-color:rgba(224,224,210,0.6);
+}
+
+.marginLRowLeftRight{
+	margin-right: 5px;
+	margin-left: 5px;
+}
+
+.paddingTopBot{
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
