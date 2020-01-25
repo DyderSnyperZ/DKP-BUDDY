@@ -4,6 +4,20 @@ const { connection } = require('../db/database')
 const router = new express.Router()
 const db = require('../../models/index')
 const { passport, loggedIn } = require('../middleware/passport')
+const multer  = require('multer')
+
+// SET STORAGE
+var storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, '/home/dyder/Téléchargements/')
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.fieldname + '-' + Date.now() + '.lua')
+    }
+  })
+  
+const upload = multer({ storage })
+const lua2json = require('lua2json');
 
 /* Création instance User */
 const User = db.sequelize.models.User
@@ -30,6 +44,21 @@ router.get('/login', loggedIn, function (req, res) {
     })
 })
 
+/* POST route login page admin */
+/* Utilisation de la fonction loggedIn comme middleware */
+router.post('/import', upload.single('monoliteFile'), function (req, res) {
+    
+    const file = req.file.path
+    lua2json.getVariable(file, 'MonDKP_DKPTable', function(err, result) {
+        console.log(err, result);
+      });
+    
+    console.log(req.file)
+    res.render('gestion', {
+        layout: 'layout'
+    })
+})
+
 /* POST route login page admin*/
 router.post('/login',
     /* Utilisation passport pour s'hautentifier */
@@ -39,6 +68,7 @@ router.post('/login',
         res.render('gestion', {
             layout: 'layout'
         })
+    
     });
 
 /* GET route items page */

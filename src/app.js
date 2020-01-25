@@ -42,16 +42,16 @@ app.set('view engine', 'hbs');
 /* config utilisation URL asset */
 app.use(express.static(publicDirectoryPath)) 
 
-/* config serveur bodyParser */
+/* serveur utilise bodyParser */
 app.use(bodyParser.urlencoded({ extended: false }));
 
-/* config serveur Passport */
+/* serveur utilise Passport */
 app.use(passport.initialize());
 
 /* config passport utilise session */
 app.use(passport.session());
 
-/* config serveur utilisation fichier router */
+/* serveur utilise  fichier router */
 app.use(router) 
 
 /* écoute sur le port 3000 */

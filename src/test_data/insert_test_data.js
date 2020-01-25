@@ -1,10 +1,9 @@
 var mysql = require('mysql')
 var crypto = require('crypto')
 const jsonfile = require('jsonfile')
-
 const db = require('../../models/index')
-
-const file = '/home/dyder/Documents/Projets/DKP/src/db/items/Item_Raid_import.json'
+const lua2json = require('lua2json');
+//const file = '/home/dyder/Documents/Projets/DKP/src/db/items/Item_Raid_import.json'
 
 const Item = db.sequelize.models.Item
 const Boss = db.sequelize.models.Boss
@@ -12,7 +11,13 @@ const Loot = db.sequelize.models.Loot
 const Personnage = db.sequelize.models.Personnage
 const Raid = db.sequelize.models.Raid
 
-jsonfile.readFile(file, function (err, listRaid) {
+
+const file = '/home/dyder/Téléchargements/MonolithDKP.lua'
+
+lua2json.getVariable(file, 'MonDKP_DKPTable', function(err, result) {
+  console.log(err, result);
+});
+/* jsonfile.readFile(file, function (err, listRaid) {
     if (err) console.error(err)
     listRaid.data.forEach((raid) => {
         var NomRaid = raid.raid
@@ -41,7 +46,7 @@ jsonfile.readFile(file, function (err, listRaid) {
         })
        
     })
-})
+}) */
 /*   Item.destroy({
     truncate: true
   }).then(() => {
