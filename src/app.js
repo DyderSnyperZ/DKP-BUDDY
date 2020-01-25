@@ -10,6 +10,11 @@ const exphbs  = require('express-handlebars')
 // définie fichier de routing
 const router = require('./routers/router') 
 
+const session = require('express-session')
+
+const bodyParser = require('body-parser')
+
+const passport = require('passport')
 // génère l'instance du serveur
 const app = express() 
 
@@ -34,6 +39,10 @@ app.set('view engine', 'hbs');
 // config utilisation URL asset
 app.use(express.static(publicDirectoryPath)) 
 
+app.use(session({ secret: "buddy" }))
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(passport.initialize());
+app.use(passport.session());
 // config pour utilisation fichier routing
 app.use(router) 
 

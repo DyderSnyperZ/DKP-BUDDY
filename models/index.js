@@ -36,4 +36,6 @@ db.Sequelize = Sequelize;
 
 //sequelize.sync()
 
+//sequelize.models.User.create({name: 'admin', password:'admin'})
+
 module.exports = db;
