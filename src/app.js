@@ -1,50 +1,58 @@
-// module serveur
+/* module gestion serveur */
 const express =  require('express')
 
-// module gestion asset
+/* module gestion asset */
 const path =  require('path')
 
-// module gestion templating handlebars
+/* module gestion templating handlebars */
 const exphbs  = require('express-handlebars')
 
-// définie fichier de routing
+/* définie fichier de routing */
 const router = require('./routers/router') 
 
-const session = require('express-session')
-
+/* lib qui permet de gérer l'entête des formulaires facilement */
 const bodyParser = require('body-parser')
 
+/* lib de gestion User (connexion) */
 const passport = require('passport')
-// génère l'instance du serveur
+
+/* génère l'instance du serveur */
 const app = express() 
 
+/* défini le chemin de fichier pour les assets */
 const publicDirectoryPath = path.join(__dirname, '../public')
-  
+
+/* initialisation du gestionnaire de templating + création fonction enleverSpecialChar utilisable dans les template  */
 const hbs = exphbs.create({
     extname: '.hbs',
     defaultLayout: 'layout',
     helpers: {
-        trim: function (value){
+        enleverSpecialChar: function (value){
             return value.replace(/[^a-zA-Z]+/g, "")
         }
     }
 })
 
-// rename fichier .handlebars en .hbs
+/* rename fichier templating .handlebars en .hbs */
 app.engine('hbs', hbs.engine);
 
-// config serveur pour utiliser templating handlebars
+/* config serveur pour utiliser templating handlebars */
 app.set('view engine', 'hbs');
 
-// config utilisation URL asset
+/* config utilisation URL asset */
 app.use(express.static(publicDirectoryPath)) 
 
-app.use(session({ secret: "buddy" }))
+/* config serveur bodyParser */
 app.use(bodyParser.urlencoded({ extended: false }));
+
+/* config serveur Passport */
 app.use(passport.initialize());
+
+/* config passport utilise session */
 app.use(passport.session());
-// config pour utilisation fichier routing
+
+/* config serveur utilisation fichier router */
 app.use(router) 
 
-// écoute sur le port 3000
+/* écoute sur le port 3000 */
 app.listen(3000) 

@@ -7,6 +7,7 @@ const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config.json')[env];
 const db = {};
+const bcrypt = require('bcrypt')
 
 let sequelize;
 if (config.use_env_variable) {
@@ -35,7 +36,18 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 //sequelize.sync()
+/* 
+const saltRounds = 10
+const myPlaintextPassword = 'admintest'
 
-//sequelize.models.User.create({name: 'admin', password:'admin'})
+bcrypt.hash(myPlaintextPassword, saltRounds, function(err, hash) {
+  sequelize.models.User.create({name: 'admin', password:hash})
+}); */
+
+/* sequelize.models.User.destroy({
+  truncate: true
+}).then(() => {
+  console.log("Done");
+});  */
 
 module.exports = db;
