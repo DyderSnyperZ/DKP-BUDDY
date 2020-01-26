@@ -36,12 +36,10 @@ passport.deserializeUser(function (user, done) {
 /* On appele ce type de fonction des middleware car on peut les mettres entre "middle" chaque appelle de route pour vérifier si User connecté */
 function loggedIn(req, res, next) {
 
-    /* Si pas logger redirection vers /login */
     if (req.user) {
+        next()
+    }else{/* Si pas logger redirection vers /login */
         res.redirect('/login');
-    } else {  /* Si  logger redirection vers /admin */
-        res.redirect('/admin');
     }
 }
-
 module.exports = { passport, loggedIn }

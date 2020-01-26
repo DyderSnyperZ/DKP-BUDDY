@@ -1,10 +1,10 @@
 /* Inclusion des lib à utiliser */
 const express = require('express')
-const { connection } = require('../db/database')
 const router = new express.Router()
 const db = require('../../models/index')
 const { passport, loggedIn } = require('../middleware/passport')
 const multer  = require('multer')
+const utils = require('../utils/parserLua')
 
 // SET STORAGE
 var storage = multer.diskStorage({
@@ -17,20 +17,24 @@ var storage = multer.diskStorage({
   })
   
 const upload = multer({ storage })
-const lua2json = require('lua2json');
 
 /* Création instance User */
 const User = db.sequelize.models.User
 
 /* GET route homepage */
-router.get('/home', function (req, res) {
+router.get('/home', async function (req, res) {
+
+    const listeDKP = await db.sequelize.models.Personnage.findAll({
+        attributes:['nom', 'dkp']
+    })
     res.render('index', {
+        listeDKP: listeDKP,
         layout: 'layout'
     })
 })
 
 /* GET route page admin */
-router.get('/admin', function (req, res) {
+router.get('/admin', /*loggedIn,*/ function (req, res) {
     res.render('gestion', {
         layout: 'layout'
     })
@@ -38,7 +42,7 @@ router.get('/admin', function (req, res) {
 
 /* GET route login page admin */
 /* Utilisation de la fonction loggedIn comme middleware */
-router.get('/login', loggedIn, function (req, res) {
+router.get('/login', function (req, res) {
     res.render('login', {
         layout: 'layout'
     })
@@ -48,12 +52,8 @@ router.get('/login', loggedIn, function (req, res) {
 /* Utilisation de la fonction loggedIn comme middleware */
 router.post('/import', upload.single('monoliteFile'), function (req, res) {
     
-    const file = req.file.path
-    lua2json.getVariable(file, 'MonDKP_DKPTable', function(err, result) {
-        console.log(err, result);
-      });
-    
-    console.log(req.file)
+    const file = req.file
+    utils.ImportData(file)
     res.render('gestion', {
         layout: 'layout'
     })

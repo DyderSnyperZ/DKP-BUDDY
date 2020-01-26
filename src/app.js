@@ -13,6 +13,9 @@ const router = require('./routers/router')
 /* lib qui permet de gérer l'entête des formulaires facilement */
 const bodyParser = require('body-parser')
 
+/* lib qui permet de gérer session */
+const session = require('express-session')
+
 /* lib de gestion User (connexion) */
 const passport = require('passport')
 
@@ -42,13 +45,20 @@ app.set('view engine', 'hbs');
 /* config utilisation URL asset */
 app.use(express.static(publicDirectoryPath)) 
 
+/* config session */
+app.use(session({
+    name: 'session_admin',
+    proxy: true,
+    resave: false,
+    saveUninitialized: true,
+    secret: 'buddy' }));
+
 /* serveur utilise bodyParser */
 app.use(bodyParser.urlencoded({ extended: false }));
 
 /* serveur utilise Passport */
 app.use(passport.initialize());
 
-/* config passport utilise session */
 app.use(passport.session());
 
 /* serveur utilise  fichier router */
