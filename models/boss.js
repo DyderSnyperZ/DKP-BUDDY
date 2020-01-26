@@ -1,14 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Boss = sequelize.define('Boss', {
-    /* id_raid: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'Raid',
-        key: 'id'
-      }
-    }, */
     dkp_gain: {
       type: DataTypes.INTEGER,
       allowNull: false

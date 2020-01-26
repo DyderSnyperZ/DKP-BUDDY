@@ -29,7 +29,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {});
   Personnage.associate = function(models) {
-    // associations can be defined here
+    Personnage.hasMany(models.Historique, {foreignKey: 'id_personnage'})
   };
   return Personnage;
 };

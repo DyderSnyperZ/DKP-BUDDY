@@ -1,14 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Item = sequelize.define('Item', {
-   /*  id_boss: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'Boss',
-        key: 'id'
-      }
-    }, */
     prix: {
       type: DataTypes.INTEGER,
       allowNull: false
