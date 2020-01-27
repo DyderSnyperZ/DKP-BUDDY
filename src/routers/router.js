@@ -6,7 +6,7 @@ const { passport, loggedIn } = require('../middleware/passport')
 const multer  = require('multer')
 const utils = require('../utils/parserLua')
 
-// SET STORAGE
+// SET STORAGE MULTER
 var storage = multer.diskStorage({
     destination: function(req, file, cb) {
         cb(null, '/home/dyder/Téléchargements/')
@@ -24,17 +24,34 @@ const User = db.sequelize.models.User
 /* GET route homepage */
 router.get('/home', async function (req, res) {
 
-    const listeDKP = await db.sequelize.models.Personnage.findAll({
-        attributes:['nom', 'dkp']
-    })
+    try {
+        listeDKP = await db.sequelize.models.Personnage.findAll({
+            attributes:['nom', 'dkp']
+        })
+        
+        listeHistorique = await db.sequelize.models.Historique.findAll({
+            attributes:['id_wowhead', 'date_loot', 'dkp_lost'],
+            include: [{
+                model: db.sequelize.models.Personnage,
+                attributes:['nom']
+            }],
+        })
+        console.log(listeHistorique)
+    } catch (error) {
+        throw new Error(error)
+    }
+
+    //console.log(listeDKP)
     res.render('index', {
         listeDKP: listeDKP,
+        listeHistorique: listeHistorique,
         layout: 'layout'
     })
 })
 
 /* GET route page admin */
 router.get('/admin', /*loggedIn,*/ function (req, res) {
+    
     res.render('gestion', {
         layout: 'layout'
     })
@@ -50,10 +67,11 @@ router.get('/login', function (req, res) {
 
 /* POST route login page admin */
 /* Utilisation de la fonction loggedIn comme middleware */
-router.post('/import', upload.single('monoliteFile'), function (req, res) {
+router.post('/import', upload.single('monoliteFile'), async function (req, res) {
     
     const file = req.file
-    utils.ImportData(file)
+    await utils.ImportDataDkp(file)
+    await utils.ImportDateHistorique(file)
     res.render('gestion', {
         layout: 'layout'
     })

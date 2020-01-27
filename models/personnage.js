@@ -30,6 +30,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Personnage.associate = function(models) {
     Personnage.hasMany(models.Historique, {foreignKey: 'id_personnage'})
+    models.Historique.belongsTo(Personnage, {foreignKey: 'id_personnage'})
   };
   return Personnage;
 };

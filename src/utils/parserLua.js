@@ -4,8 +4,9 @@ const db = require('../../models/index')
 const Personnage = db.sequelize.models.Personnage
 const Historique = db.sequelize.models.Historique
 
-function ImportData(file) {
-  /*  lua2json.getVariable(file.path, 'MonDKP_DKPTable', function (err, tabPersonnages) {
+async function ImportDataDkp(file) {
+
+   lua2json.getVariable(file.path, 'MonDKP_DKPTable', function (err, tabPersonnages) {
      Object.values(tabPersonnages).forEach(async personnage => {
        
        var classe = personnage.class
@@ -14,14 +15,14 @@ function ImportData(file) {
        const exist = await Personnage.findOne({ where: { nom: nom } })
       
        if (exist===null) {
-          Personnage.create({
+          await Personnage.create({
            dkp: dkp,
            nom: nom,
            classe: classe,
            actif:1
          }) 
        } else {
-         Personnage.update({
+         await Personnage.update({
            dkp:dkp,
            actif:1
          },
@@ -29,40 +30,46 @@ function ImportData(file) {
               where: { nom: nom }
          })
        }
+
+       
      });
-   }); */
-  lua2json.getVariable(file.path, 'MonDKP_Loot', async function (err, tabHistorique) {
+   });
+  }
+  
+  async function ImportDateHistorique(file){
+
+    lua2json.getVariable(file.path, 'MonDKP_Loot', async function (err, tabHistorique) {
     const listePersonnage = await Personnage.findAll({
       attributes: ['id', 'nom']
     })
-
+    
     Object.values(tabHistorique).forEach(async historique => {
-
       if (historique) {
 
-        var nom = historique.player
-        var date = historique.date
-        var dkpLost = historique.cost
-        var lootById = parseInt(historique.loot.match(/\d{4,6}/g)) // Regex match chiffre entre 4 et 6
+        let nom = historique.player
+        let date = historique.date
+        let dkpLost = historique.cost
+        let lootById = parseInt(historique.loot.match(/\d{4,6}/g)) // Regex match chiffre entre 4 et 6
+      
+        const isLargeNumber = (element) => element > 13;
 
-      }
-        var isIdExist = listePersonnage.filter((o)=>{
-          return o.dataValues.player === nom ? o.dataValues.id : false
-        })
-  
+        let isIdExist = listePersonnage.find(personnage => personnage.nom === nom)
+      
         if(isIdExist){
           await Historique.create({
             id_wowhead:lootById,
             dkp_lost: dkpLost,
             date_loot:date,
-            id_personnage: isIdExist
+            id_personnage: isIdExist.id
           })
-        }
+        } 
 
+      }
     })
   })
 }
 
 module.exports = {
-  ImportData
+  ImportDataDkp,
+  ImportDateHistorique
 }

@@ -2,7 +2,7 @@
 module.exports = (sequelize, DataTypes) => {
   const Historique = sequelize.define('Historique', {
     id_wowhead: {
-      type :DataTypes.STRING,
+      type :DataTypes.INTEGER,
       allowNull: false
     },
     date_loot: {
