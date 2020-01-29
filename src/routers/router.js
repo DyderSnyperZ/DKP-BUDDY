@@ -35,13 +35,13 @@ router.get('/home', async function (req, res) {
                 model: db.sequelize.models.Personnage,
                 attributes:['nom']
             }],
+            order: [['createdAt', 'DESC']]
         })
-        console.log(listeHistorique)
+        
     } catch (error) {
         throw new Error(error)
     }
 
-    //console.log(listeDKP)
     res.render('index', {
         listeDKP: listeDKP,
         listeHistorique: listeHistorique,

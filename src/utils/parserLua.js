@@ -9,10 +9,10 @@ async function ImportDataDkp(file) {
    lua2json.getVariable(file.path, 'MonDKP_DKPTable', function (err, tabPersonnages) {
      Object.values(tabPersonnages).forEach(async personnage => {
        
-       var classe = personnage.class
-       var nom = personnage.player
-       var dkp = personnage.dkp
-       const exist = await Personnage.findOne({ where: { nom: nom } })
+      let classe = personnage.class
+      let nom = personnage.player
+      let dkp = personnage.dkp
+      let exist = await Personnage.findOne({ where: { nom: nom } })
       
        if (exist===null) {
           await Personnage.create({
@@ -30,8 +30,6 @@ async function ImportDataDkp(file) {
               where: { nom: nom }
          })
        }
-
-       
      });
    });
   }
@@ -39,19 +37,20 @@ async function ImportDataDkp(file) {
   async function ImportDateHistorique(file){
 
     lua2json.getVariable(file.path, 'MonDKP_Loot', async function (err, tabHistorique) {
-    const listePersonnage = await Personnage.findAll({
+      let listePersonnage = await Personnage.findAll({
       attributes: ['id', 'nom']
     })
     
     Object.values(tabHistorique).forEach(async historique => {
+
       if (historique) {
 
         let nom = historique.player
-        let date = historique.date
+        let date = /*new Date(*/historique.date/*)*/
         let dkpLost = historique.cost
         let lootById = parseInt(historique.loot.match(/\d{4,6}/g)) // Regex match chiffre entre 4 et 6
       
-        const isLargeNumber = (element) => element > 13;
+        let isLargeNumber = (element) => element > 13;
 
         let isIdExist = listePersonnage.find(personnage => personnage.nom === nom)
       

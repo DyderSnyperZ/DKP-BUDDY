@@ -2,28 +2,28 @@
     <ul class="nav nav-pills mb-3" id="pills-tab-raid" role="tablist">
         {{#each listeAllItemByRaid}}
         <li class="nav-item">
-            <a class="nav-link" id="{{ enleverSpecialChar nom }}" data-toggle="pill" href="#pills-{{ enleverSpecialChar nom  }}"
-                role="tab" aria-controls="pills-{{ enleverSpecialChar nom  }}" aria-selected="true">{{ nom }}</a>
+            <a class="nav-link" id="{{ removeSpecialChar nom }}" data-toggle="pill" href="#pills-{{ removeSpecialChar nom  }}"
+                role="tab" aria-controls="pills-{{ removeSpecialChar nom  }}" aria-selected="true">{{ nom }}</a>
         </li>
         {{/each}}
     </ul>
     <div class="tab-content" id="pills-tabContent">
         {{#each listeAllItemByRaid}}
-        <div class="tab-pane fade" id="pills-{{ enleverSpecialChar nom  }}" role="tabpanel"
-            aria-labelledby="pills-{{ enleverSpecialChar nom  }}-tab">
+        <div class="tab-pane fade" id="pills-{{ removeSpecialChar nom  }}" role="tabpanel"
+            aria-labelledby="pills-{{ removeSpecialChar nom  }}-tab">
             <ul class="nav nav-pills mb-3" id="pills-tab-boss" role="tablist">
                 {{#each Bosses}}
                 <li class="nav-item">
-                    <a class="nav-link" id="{{ enleverSpecialChar nom  }}" data-toggle="pill"
-                        href="#pills-{{ enleverSpecialChar nom  }}" role="tab" aria-controls="pills-{{ enleverSpecialChar nom  }}"
+                    <a class="nav-link" id="{{ removeSpecialChar nom  }}" data-toggle="pill"
+                        href="#pills-{{ removeSpecialChar nom  }}" role="tab" aria-controls="pills-{{ removeSpecialChar nom  }}"
                         aria-selected="true">{{nom}}</a>
                 </li>
                 {{/each}}
             </ul>
             <div class="tab-content" id="pills-tabContent">
                 {{#each Bosses}}
-                <div class="tab-pane fade" id="pills-{{ enleverSpecialChar nom  }}" role="tabpanel"
-                    aria-labelledby="pills-{{ enleverSpecialChar nom  }}-tab">
+                <div class="tab-pane fade" id="pills-{{ removeSpecialChar nom  }}" role="tabpanel"
+                    aria-labelledby="pills-{{ removeSpecialChar nom  }}-tab">
                     <table class="table table-bordered">
                     <tbody>
                     {{#each Items}}

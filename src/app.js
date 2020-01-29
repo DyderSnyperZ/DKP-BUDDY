@@ -25,13 +25,29 @@ const app = express()
 /* défini le chemin de fichier pour les assets */
 const publicDirectoryPath = path.join(__dirname, '../public')
 
-/* initialisation du gestionnaire de templating + création fonction enleverSpecialChar utilisable dans les template  */
+/* initialisation du gestionnaire de templating + création fonctions utilisable dans les template  */
 const hbs = exphbs.create({
     extname: '.hbs',
     defaultLayout: 'layout',
-    helpers: {
-        enleverSpecialChar: function (value){
+    helpers : {
+        removeSpecialChar(value){
             return value.replace(/[^a-zA-Z]+/g, "")
+        },
+        historiqueString(dkpLost){
+            let phrase = ''
+            let reversedDkp = 0
+        
+            if(dkpLost > 0){
+                reversedDkp = -Math.abs(dkpLost)
+                phrase = `a perdu ${reversedDkp} DKP `
+            }else if(dkpLost < 0){
+                reversedDkp = Math.abs(dkpLost)
+                phrase = `a gagné ${reversedDkp} DKP `
+            }
+            return phrase
+        },
+        timestampToDate(date){
+            return new Date(date)
         }
     }
 })

@@ -18,18 +18,11 @@
         </table>
     </div>
     <div class="col-md-5 whiteColor paddingTop">
-         <table id="tab_Liste_Dpk" class="table table-striped table-bordered" style="width:100%">
-            <thead>
-                <tr>
-                    <th>Nom</th>
-                    <th>Points</th>
-                </tr>
-            </thead>
+         <table id="tab_Historique" class="table table-striped table-bordered scrollable" style="width:100%">
             <tbody>
                 {{#each listeHistorique}}
                 <tr>
-                    <td>{{Personnage.nom}}</td>
-                    <td>{{id_wowhead}}</td>
+                    <td>{{Personnage.nom}} {{ historiqueString dkp_lost  }} pour <a href="https://en.classic.wowhead.com/item={{id_wowhead}}" target="_blank" data-wowhead="item={{id_wowhead}}"></a> à {{ date_loot }} </td>
                 </tr>
                 {{/each}}
             </tbody>
@@ -40,6 +33,30 @@
     $(document).ready(function() {
     $('#tab_Liste_Dpk').DataTable({
         "order": [1, 'desc']
+    });
+     $('#tab_Historique').DataTable({
+             autoWidth: false,
+        columns: [
+            {
+                data: 'toto1',
+                width: '40%',
+                default: '-'
+            },
+            {
+                data: 'toto2',
+                width: '30%',
+                default: '-'
+            },
+            {
+                data: 'toto3',
+                width: '30%',
+                default: '-'
+            },
+        ],
+        fixedHeader: true,
+        orderCellsTop: true,
+        paging: false,
+        info: false
     });
 } );
 </script>
