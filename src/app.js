@@ -19,6 +19,8 @@ const session = require('express-session')
 /* lib de gestion User (connexion) */
 const passport = require('passport')
 
+const dateformat = require('dateformat')
+
 /* génère l'instance du serveur */
 const app = express() 
 
@@ -39,15 +41,15 @@ const hbs = exphbs.create({
         
             if(dkpLost > 0){
                 reversedDkp = -Math.abs(dkpLost)
-                phrase = `a perdu ${reversedDkp} DKP `
+                phrase = `${reversedDkp} DKP `
             }else if(dkpLost < 0){
                 reversedDkp = Math.abs(dkpLost)
-                phrase = `a gagné ${reversedDkp} DKP `
+                phrase = `${reversedDkp} DKP `
             }
             return phrase
         },
         timestampToDate(date){
-            return new Date(date)
+            return dateformat(date, "dd-mm-yy à HH:MM")
         }
     }
 })

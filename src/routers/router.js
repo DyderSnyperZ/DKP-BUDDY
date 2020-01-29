@@ -9,7 +9,7 @@ const utils = require('../utils/parserLua')
 // SET STORAGE MULTER
 var storage = multer.diskStorage({
     destination: function(req, file, cb) {
-        cb(null, '/home/dyder/Téléchargements/')
+        cb(null, './files')
     },
     filename: function (req, file, cb) {
       cb(null, file.fieldname + '-' + Date.now() + '.lua')
