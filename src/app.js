@@ -33,7 +33,7 @@ const hbs = exphbs.create({
     defaultLayout: 'layout',
     helpers : {
         removeSpecialChar(value){
-            return value.replace(/[^a-zA-Z]+/g, "")
+            return value.replace(/[^A-Za-z0-9]+/g, "")
         },
         historiqueString(dkpLost){
             let phrase = ''
