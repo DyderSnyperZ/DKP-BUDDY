@@ -57,3 +57,22 @@ body {
 	padding-top: 15px;
 	padding-bottom: 15px;
 }
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link{
+	background-color: #625f62;!important;
+}
+
+a {
+	color: #625f62;
+	text-decoration: none;
+	background-color: transparent;
+	-webkit-text-decoration-skip: objects;
+}
+
+a:hover {
+	color: white;
+}
+
+div.dataTables_length {
+	display: none;
+}

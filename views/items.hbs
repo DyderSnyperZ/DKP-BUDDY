@@ -1,5 +1,5 @@
-<div class="whiteColor paddingTopBot">
-    <ul class="nav nav-pills mb-3" id="pills-tab-raid" role="tablist">
+<div class="whiteColor paddingTopBot marginLRowLeftRight">
+    <ul class="nav nav-pills grey mb-3 marginLRowLeftRight" id="pills-tab-raid" role="tablist">
         {{#each listeAllItemByRaid}}
         <li class="nav-item">
             <a class="nav-link" id="{{ removeSpecialChar nom }}" data-toggle="pill" href="#pills-{{ removeSpecialChar nom  }}"
@@ -7,28 +7,35 @@
         </li>
         {{/each}}
     </ul>
-    <div class="tab-content" id="pills-tabContent">
+    <div class="tab-content marginLRowLeftRight" id="pills-tabContent">
         {{#each listeAllItemByRaid}}
-        <div class="tab-pane fade" id="pills-{{ removeSpecialChar nom  }}" role="tabpanel"
+        <div class="tab-pane fade marginLRowLeftRight" id="pills-{{ removeSpecialChar nom  }}" role="tabpanel"
             aria-labelledby="pills-{{ removeSpecialChar nom  }}-tab">
-            <ul class="nav nav-pills mb-3" id="pills-tab-boss" role="tablist">
+            <ul class="nav nav-pills mb-3 marginLRowLeftRight" id="pills-tab-boss" role="tablist">
                 {{#each Bosses}}
                 <li class="nav-item">
-                    <a class="nav-link" id="{{ removeSpecialChar nom  }}" data-toggle="pill"
+                    <a class="nav-link boss" id="{{ removeSpecialChar nom  }}" data-toggle="pill"
                         href="#pills-{{ removeSpecialChar nom  }}" role="tab" aria-controls="pills-{{ removeSpecialChar nom  }}"
                         aria-selected="true">{{nom}}</a>
                 </li>
                 {{/each}}
             </ul>
-            <div class="tab-content" id="pills-tabContent">
+            <div class="tab-content marginLRowLeftRight" id="pills-tabContent">
                 {{#each Bosses}}
                 <div class="tab-pane fade" id="pills-{{ removeSpecialChar nom  }}" role="tabpanel"
                     aria-labelledby="pills-{{ removeSpecialChar nom  }}-tab">
-                    <table class="table table-bordered">
+                    <table id="table-{{ removeSpecialChar nom  }}" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                        <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>Prix</th>
+                        </tr>
+                        </thead>
                     <tbody>
                     {{#each Items}}
                         <tr>
-                            <td><a href="https://fr.classic.wowhead.com/item={{id_wowhead}}" target="_blank" data-wowhead="item={{id_wowhead}}"></a></td>
+                            <td><a href="https://en.classic.wowhead.com/item={{id_wowhead}}" target="_blank" data-wowhead="item={{id_wowhead}}"></a></td>
+                            <td>{{ prix }}</td>
                         </tr>
                     {{/each}}
                     </tbody>
@@ -40,3 +47,25 @@
         {{/each}}
     </div>
 </div>
+<script>
+    $(document).ready(function() {
+
+        {{#each listeAllItemByRaid}}
+            {{#each Bosses}}
+                $('#table-{{ removeSpecialChar nom  }}').DataTable({
+                    "scrollY":        "400px",
+                    "scrollCollapse": true,
+                    "paging": false,
+                    "searching": false
+                });
+         {{/each}}
+        {{/each}}
+
+    $('a[data-toggle="pill"]').on('shown.bs.tab', function (e) {
+        $.fn.dataTable.tables( {visible: true, api: true} ).columns.adjust();
+    } );
+
+
+    });
+
+</script>
