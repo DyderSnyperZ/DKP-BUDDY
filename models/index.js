@@ -42,8 +42,8 @@ const myPlaintextPassword = 'admintest'
 
 bcrypt.hash(myPlaintextPassword, saltRounds, function(err, hash) {
   sequelize.models.User.create({name: 'admin', password:hash})
-});
- */
+}); */
+
 /* sequelize.models.User.destroy({
   truncate: true
 }).then(() => {

@@ -21,6 +21,9 @@ const upload = multer({ storage })
 /* Création instance User */
 const User = db.sequelize.models.User
 
+/* Création instance Item */
+const Item = db.sequelize.models.Item
+
 /* GET route homepage */
 router.get('/home', async function (req, res) {
 
@@ -42,7 +45,7 @@ router.get('/home', async function (req, res) {
         throw new Error(error)
     }
 
-    res.render('index', {
+    res.render('home', {
         listeDKP: listeDKP,
         listeHistorique: listeHistorique,
         layout: 'layout'
@@ -50,7 +53,7 @@ router.get('/home', async function (req, res) {
 })
 
 /* GET route page admin */
-router.get('/admin', /*loggedIn,*/ function (req, res) {
+router.get('/admin', loggedIn, function (req, res) {
     
     res.render('gestion', {
         layout: 'layout'
@@ -93,23 +96,28 @@ router.post('/login',
 router.get('/items', async (req, res) => {
 
     /* Création instance Raid */
-    const Raid = db.sequelize.models.Raid
-
-    const listeAllItemByRaid = await Raid.findAll({  // construit la requete pour récupérer les donnnées depuis  table Raid
-        attributes: ['nom'],  // SELECT  Raid.nom
-        include: [{                 // JOIN 
-            model: db.sequelize.models.Boss,  // table BOSS
-            attributes: ['nom'],    // SELECT Boss.nom
-            include: [{             // JOIN
-                model: db.sequelize.models.Item, // table Item
-                attributes: ['id_wowhead'],  // SELECT Item.id_wowhead
+    let Raid = db.sequelize.models.Raid
+    let listeAllItemByRaid
+    try {
+        listeAllItemByRaid = await Raid.findAll({  // construit la requete pour récupérer les donnnées depuis  table Raid
+            attributes: ['nom'],  // SELECT  Raid.nom
+            include: [{                 // JOIN 
+                model: db.sequelize.models.Boss,  // table BOSS
+                attributes: ['nom'],    // SELECT Boss.nom
+                include: [{             // JOIN
+                    model: db.sequelize.models.Item, // table Item
+                    attributes: ['id_wowhead', 'prix'],  // SELECT Item.id_wowhead
+                    required: true
+                }],
+    
                 required: true
             }],
+            required: true // permet de forcer l'association avec un INNER JOIN, de base utilise LEFT JOIN
+        })
+    } catch (error) {
+        throw new Error ('Problème récupération items',error)
+    }
 
-            required: true
-        }],
-        required: true // permet de forcer l'association avec un INNER JOIN, de base utilise LEFT JOIN
-    })
 
     /* Render la vue items */
     res.render('items', {
@@ -118,5 +126,24 @@ router.get('/items', async (req, res) => {
     })
 
 })
+
+router.post('/updatePrice',async (req, res) => {
+        
+        let id_wowhead = req.body.id
+        let newPrice = req.body.newPrice
+
+        console.log(id_wowhead)
+        console.log(newPrice)
+        try {
+            await Item.update({ prix: newPrice }, {
+                where: {
+                    id_wowhead: id_wowhead
+                }
+              });
+              res.send(200)
+        } catch (error) {
+            throw new Error('Erreur update prix')
+        }
+    });
 
 module.exports = router // pour pouvoir utiliser la lib en dehors de ce fichier

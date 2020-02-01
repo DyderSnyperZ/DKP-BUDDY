@@ -59,7 +59,7 @@ body {
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link{
-	background-color: #625f62;!important;
+	background-color: #625f62!important;
 }
 
 a {
@@ -75,4 +75,12 @@ a:hover {
 
 div.dataTables_length {
 	display: none;
+}
+
+.none{
+	display: none;
+}
+
+.w50{
+	width: 50px;
 }

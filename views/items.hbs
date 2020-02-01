@@ -35,7 +35,11 @@
                     {{#each Items}}
                         <tr>
                             <td><a href="https://en.classic.wowhead.com/item={{id_wowhead}}" target="_blank" data-wowhead="item={{id_wowhead}}"></a></td>
-                            <td>{{ prix }}</td>
+                            <td data-id="{{id_wowhead}}">
+                                <span class="prix">{{ prix }}</span>
+                                <input type="text" class="form-control w50 none" value="{{ prix }}">
+                
+                                <i class="far fa-edit"></i></td>
                         </tr>
                     {{/each}}
                     </tbody>
@@ -50,22 +54,23 @@
 <script>
     $(document).ready(function() {
 
+// Redimmensionne le tableau a chaque changement d'onglet
+$('a[data-toggle="pill"]').on('shown.bs.tab', function (e) {
+    $.fn.dataTable.tables( {visible: true, api: true} ).columns.adjust();
+} );
+
+        // Création des tables d'items
         {{#each listeAllItemByRaid}}
             {{#each Bosses}}
-                $('#table-{{ removeSpecialChar nom  }}').DataTable({
+                $("#table-{{ removeSpecialChar nom  }}").DataTable({
                     "scrollY":        "400px",
                     "scrollCollapse": true,
                     "paging": false,
-                    "searching": false
+                    "searching": false,
+                    "ordering": false
                 });
          {{/each}}
         {{/each}}
-
-    $('a[data-toggle="pill"]').on('shown.bs.tab', function (e) {
-        $.fn.dataTable.tables( {visible: true, api: true} ).columns.adjust();
-    } );
-
-
     });
 
 </script>
