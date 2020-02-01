@@ -2617,7 +2617,7 @@
       ]
     },
     {
-      "raid": "BlackwingLair",
+      "raid": "Blackwing Lair",
       "items": [
         {
           "name": "Razorgore the Untamed",
@@ -3350,7 +3350,7 @@
       ]
     },
     {
-      "raid": "TheRuinsofAhnQiraj",
+      "raid": "The Ruins of AhnQiraj",
       "items": [
         {
           "name": "Kurinnaxx",
@@ -3827,7 +3827,7 @@
       ]
     },
     {
-      "raid": "TheTempleofAhnQiraj",
+      "raid": "The Temple of AhnQiraj",
       "items": [
         {
           "name": "The Prophet Skeram",
@@ -4549,7 +4549,7 @@
       ]
     },
     {
-      "raid": "WorldBosses",
+      "raid": "World Bosses",
       "items": [
         {
           "name": "Azuregos",

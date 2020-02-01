@@ -84,3 +84,8 @@ div.dataTables_length {
 .w50{
 	width: 50px;
 }
+
+.fontCraftLh20 {
+	font-family: 'lifecraftregular';
+	font-size: 20px;
+}

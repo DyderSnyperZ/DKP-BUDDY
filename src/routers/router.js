@@ -2,7 +2,7 @@
 const express = require('express')
 const router = new express.Router()
 const db = require('../../models/index')
-const { passport, loggedIn } = require('../middleware/passport')
+const { passport, loggedIn, /* loggedInForUpdate */ } = require('../middleware/passport')
 const multer  = require('multer')
 const utils = require('../utils/parserLua')
 
@@ -54,7 +54,6 @@ router.get('/home', async function (req, res) {
 
 /* GET route page admin */
 router.get('/admin', loggedIn, function (req, res) {
-    
     res.render('gestion', {
         layout: 'layout'
     })
@@ -73,8 +72,13 @@ router.get('/login', function (req, res) {
 router.post('/import', upload.single('monoliteFile'), async function (req, res) {
     
     const file = req.file
-    await utils.ImportDataDkp(file)
-    await utils.ImportDateHistorique(file)
+    try {
+        await utils.ImportDataDkp(file)
+        await utils.ImportDateHistorique(file)
+    } catch (error) {
+        throw new Error("Probleme import", error)
+    }
+    
     res.render('gestion', {
         layout: 'layout'
     })
@@ -90,11 +94,16 @@ router.post('/login',
             layout: 'layout'
         })
     
-    });
+    })
 
 /* GET route items page */
 router.get('/items', async (req, res) => {
 
+    let isModifiable = false
+    if(req.user)
+        isModifiable = true
+
+    console.log(isModifiable)
     /* Création instance Raid */
     let Raid = db.sequelize.models.Raid
     let listeAllItemByRaid
@@ -117,23 +126,20 @@ router.get('/items', async (req, res) => {
     } catch (error) {
         throw new Error ('Problème récupération items',error)
     }
-
-
-    /* Render la vue items */
+    /* Render la vue items */   
     res.render('items', {
         layout: 'layout',
-        listeAllItemByRaid: listeAllItemByRaid
+        listeAllItemByRaid: listeAllItemByRaid,
+        isModifiable: isModifiable
     })
-
 })
 
-router.post('/updatePrice',async (req, res) => {
-        
+/* POST route update Prix */
+router.post('/updatePrice', loggedIn, async (req, res) => {
+
         let id_wowhead = req.body.id
         let newPrice = req.body.newPrice
 
-        console.log(id_wowhead)
-        console.log(newPrice)
         try {
             await Item.update({ prix: newPrice }, {
                 where: {

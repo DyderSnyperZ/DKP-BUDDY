@@ -50,6 +50,14 @@ const hbs = exphbs.create({
         },
         timestampToDate(date){
             return dateformat(date, "dd-mm-yy à HH:MM")
+        },
+        checkIsModifiable(isModifiable){
+            if(isModifiable === true){
+                return true
+            }else{
+                return false
+            }
+            
         }
     }
 })

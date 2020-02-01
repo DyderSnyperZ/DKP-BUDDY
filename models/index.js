@@ -50,5 +50,4 @@ bcrypt.hash(myPlaintextPassword, saltRounds, function(err, hash) {
   console.log("Done");
 });  */
 
-
 module.exports = db;

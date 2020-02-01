@@ -43,4 +43,8 @@ function loggedIn(req, res, next) {
     }
 }
 
-module.exports = { passport, loggedIn }
+/* function loggedInForUpdate(req, res, next) {
+    next()
+} */
+
+module.exports = { passport, loggedIn, /* loggedInForUpdate */ }

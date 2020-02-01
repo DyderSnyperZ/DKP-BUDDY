@@ -37,9 +37,10 @@
                             <td><a href="https://en.classic.wowhead.com/item={{id_wowhead}}" target="_blank" data-wowhead="item={{id_wowhead}}"></a></td>
                             <td data-id="{{id_wowhead}}">
                                 <span class="prix">{{ prix }}</span>
-                                <input type="text" class="form-control w50 none" value="{{ prix }}">
-                
-                                <i class="far fa-edit"></i></td>
+                                {{#if ../../../isModifiable }}
+                                    <input type="text" class="form-control w50 none" value="{{ prix }}">
+                                    <i class="far fa-edit"></i></td>
+                                {{/if }}
                         </tr>
                     {{/each}}
                     </tbody>
@@ -59,6 +60,7 @@ $('a[data-toggle="pill"]').on('shown.bs.tab', function (e) {
     $.fn.dataTable.tables( {visible: true, api: true} ).columns.adjust();
 } );
 
+(function() { var css = document.createElement('link'); css.href = 'https://use.fontawesome.com/releases/v5.1.0/css/all.css'; css.rel = 'stylesheet'; css.type = 'text/css'; document.getElementsByTagName('head')[0].appendChild(css); })(); 
         // Création des tables d'items
         {{#each listeAllItemByRaid}}
             {{#each Bosses}}
