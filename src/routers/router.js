@@ -6,16 +6,19 @@ const { passport, loggedIn, /* loggedInForUpdate */ } = require('../middleware/p
 const multer  = require('multer')
 const utils = require('../utils/parserLua')
 
-// SET STORAGE MULTER
-var storage = multer.diskStorage({
+/* modification lib de gestion de fichier */
+let storage = multer.diskStorage({
+    /* défini la destination de la sauvegardes des imports */
     destination: function(req, file, cb) {
-        cb(null, './files')
+        cb(null, 'uploads/')
     },
+    /* renomme fichier sauvegarde imports */ 
     filename: function (req, file, cb) {
       cb(null, file.fieldname + '-' + Date.now() + '.lua')
     }
   })
   
+/* Set lib de gestion de fichier avec paramétrage précedement créer */
 const upload = multer({ storage })
 
 /* Création instance User */
@@ -28,13 +31,14 @@ const Item = db.sequelize.models.Item
 router.get('/home', async function (req, res) {
 
     try {
+        /* Récupère liste Personnage */
         listeDKP = await db.sequelize.models.Personnage.findAll({
             attributes:['nom', 'dkp']
         })
-        
+         /* Récupère liste Historique */
         listeHistorique = await db.sequelize.models.Historique.findAll({
             attributes:['id_wowhead', 'date_loot', 'dkp_lost'],
-            include: [{
+            include: [{ /* include = LEFT JOIN en SQL */
                 model: db.sequelize.models.Personnage,
                 attributes:['nom']
             }],
@@ -53,7 +57,7 @@ router.get('/home', async function (req, res) {
 })
 
 /* GET route page admin */
-router.get('/admin', loggedIn, function (req, res) {
+router.get('/admin',  loggedIn, function (req, res) {
     res.render('gestion', {
         layout: 'layout'
     })
@@ -72,29 +76,31 @@ router.get('/login', function (req, res) {
 router.post('/import', upload.single('monoliteFile'), async function (req, res) {
     
     const file = req.file
+    let isUpload
     try {
         await utils.ImportDataDkp(file)
         await utils.ImportDateHistorique(file)
+        isUpload = "Upload Success "
     } catch (error) {
         throw new Error("Probleme import", error)
     }
     
     res.render('gestion', {
-        layout: 'layout'
+        layout: 'layout',
+        isUpload: isUpload
     })
 })
 
 /* POST route login page admin*/
-router.post('/login',
-    /* Utilisation passport pour s'hautentifier */
-    passport.authenticate('local', { failureRedirect: '/login' }),
-    function (req, res) { // si authentification OK on redirige vers page gestion
+
+                            /* Utilisation passport pour s'hautentifier */
+router.post('/login', passport.authenticate('local', { failureRedirect: '/login' }), async function (req, res){// si authentification OK on redirige vers page gestion
         /* Render la vue items */
         res.render('gestion', {
             layout: 'layout'
         })
     
-    })
+})
 
 /* GET route items page */
 router.get('/items', async (req, res) => {
@@ -103,7 +109,6 @@ router.get('/items', async (req, res) => {
     if(req.user)
         isModifiable = true
 
-    console.log(isModifiable)
     /* Création instance Raid */
     let Raid = db.sequelize.models.Raid
     let listeAllItemByRaid
@@ -135,6 +140,7 @@ router.get('/items', async (req, res) => {
 })
 
 /* POST route update Prix */
+/* Utilisation du middleware afin de vérifier que l'admin est connecté avant de modifier le prix */
 router.post('/updatePrice', loggedIn, async (req, res) => {
 
         let id_wowhead = req.body.id

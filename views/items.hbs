@@ -2,7 +2,7 @@
     <ul class="nav nav-pills grey mb-3 marginLRowLeftRight" id="pills-tab-raid" role="tablist">
         {{#each listeAllItemByRaid}}
         <li class="nav-item">
-            <a class="nav-link" id="{{ removeSpecialChar nom }}" data-toggle="pill" href="#pills-{{ removeSpecialChar nom  }}"
+            <a class="nav-link lH20" id="{{ removeSpecialChar nom }}" data-toggle="pill" href="#pills-{{ removeSpecialChar nom  }}"
                 role="tab" aria-controls="pills-{{ removeSpecialChar nom  }}" aria-selected="true">{{ nom }}</a>
         </li>
         {{/each}}
@@ -11,7 +11,7 @@
         {{#each listeAllItemByRaid}}
         <div class="tab-pane fade marginLRowLeftRight" id="pills-{{ removeSpecialChar nom  }}" role="tabpanel"
             aria-labelledby="pills-{{ removeSpecialChar nom  }}-tab">
-            <ul class="nav nav-pills mb-3 marginLRowLeftRight" id="pills-tab-boss" role="tablist">
+            <ul class="nav nav-pills mb-3 marginLRowLeftRight lH18" id="pills-tab-boss" role="tablist">
                 {{#each Bosses}}
                 <li class="nav-item">
                     <a class="nav-link boss" id="{{ removeSpecialChar nom  }}" data-toggle="pill"
