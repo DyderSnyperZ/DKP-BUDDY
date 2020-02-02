@@ -1,6 +1,5 @@
 const lua2json = require('lua2json');
 const db = require('../../models/index')
-
 const Personnage = db.sequelize.models.Personnage
 const Historique = db.sequelize.models.Historique
 
@@ -54,9 +53,19 @@ async function ImportDataDkp(file) {
 
       /* Check si il y a un historique car défois il y a des lignes qui manques */
       if (historique) {
+       
         let nom = historique.player
-        let date = /*new Date(*/historique.date/*)*/
-        let dkpLost = historique.cost
+        let date = new Date(historique.date*1000)
+        
+        let dkpToConvert = historique.cost
+        let dkpLost
+        /* Inverse les dkp perdu car dkp perdu positif dans le fichier  */
+        if(dkpToConvert > 0){
+          dkpLost = -Math.abs(dkpToConvert)
+        }else if(dkpToConvert < 0){
+          dkpLost = Math.abs(dkpToConvert)
+        }
+      
         /* Regex pour récupérer l'id wowhead*/
         let lootById = parseInt(historique.loot.match(/\d{4,6}/g)) // Regex match chiffre entre 4 et 6
       

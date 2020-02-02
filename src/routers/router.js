@@ -42,7 +42,7 @@ router.get('/home', async function (req, res) {
                 model: db.sequelize.models.Personnage,
                 attributes:['nom']
             }],
-            order: [['createdAt', 'DESC']]
+            order: [['date_loot', 'DESC']]
         })
         
     } catch (error) {

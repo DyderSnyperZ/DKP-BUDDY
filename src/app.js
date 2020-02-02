@@ -36,16 +36,7 @@ const hbs = exphbs.create({
             return value.replace(/[^A-Za-z0-9]+/g, "")
         },
         historiqueString(dkpLost){
-            let phrase = ''
-            let reversedDkp = 0
-        
-            if(dkpLost > 0){
-                reversedDkp = -Math.abs(dkpLost)
-                phrase = `${reversedDkp} DKP `
-            }else if(dkpLost < 0){
-                reversedDkp = Math.abs(dkpLost)
-                phrase = `${reversedDkp} DKP `
-            }
+            let phrase = `${dkpLost} DKP `
             return phrase
         },
         timestampToDate(date){
