@@ -1,4 +1,4 @@
-<div class="whiteColor paddingTopBot marginLRowLeftRight">
+<div class="whiteColor paddingTopBot marginLRowLeftRight0">
     <ul class="nav nav-pills grey mb-3 marginLRowLeftRight" id="pills-tab-raid" role="tablist">
         {{#each listeAllItemByRaid}}
         <li class="nav-item">
@@ -34,12 +34,12 @@
                     <tbody>
                     {{#each Items}}
                         <tr>
-                            <td><a href="https://en.classic.wowhead.com/item={{id_wowhead}}" target="_blank" data-wowhead="item={{id_wowhead}}"></a></td>
+                            <td><a class="helvetica" href="https://en.classic.wowhead.com/item={{id_wowhead}}" target="_blank" data-wowhead="item={{id_wowhead}}"></a></td>
                             <td data-id="{{id_wowhead}}">
                                 <span class="prix">{{ prix }}</span>
                                 {{#if ../../../isModifiable }}
                                     <input type="text" class="form-control w50 none" value="{{ prix }}">
-                                    <i class="far fa-edit"></i></td>
+                                    <i class="far fa-edit cursorPointer"></i></td>
                                 {{/if }}
                         </tr>
                     {{/each}}

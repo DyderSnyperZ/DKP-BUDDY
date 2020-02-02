@@ -17,11 +17,12 @@ body {
 
 /*** Phoenix © Sulfuron ***/
 .titre {
-	padding: 90px 0 40px 0;
+	padding: 68px 0 40px 0;
 	text-align: center;
 	font-family: 'lifecraftregular';
 	font-size: 70px;
 	text-shadow: 0 0 5px #686868;
+	background-color:rgba(232,232,232,0.3);
 }
 
 .fontWow{
@@ -96,4 +97,17 @@ div.dataTables_length {
 
 .lH18{
 	font-size: 18px;
+}
+
+.marginLRowLeftRight0 {
+	margin-right: 0px;
+	margin-left: 0px;
+}
+
+.helvetica {
+	font-family: 'Helvetica Neue';
+}
+
+.cursorPointer {
+	cursor: pointer;
 }

@@ -6,8 +6,8 @@ $(document).on("click", ".fa-edit", function(){
     tdElement.find('input').show()
     tdElement.find('.fa-edit').remove()
     tdElement.find('.prix').hide()
-    tdElement.append('<i class="far fa-check-square marginLRowLeftRight"></i>')
-    tdElement.append('<i class="far fa-window-close"></i>')
+    tdElement.append('<i class="far fa-check-square marginLRowLeftRight cursorPointer"></i>')
+    tdElement.append('<i class="far fa-window-close cursorPointer"></i>')
     
 })
 
@@ -21,7 +21,14 @@ $(document).on("click", ".fa-window-close", function(){
  $(document).on("click", ".fa-check-square", function(){
     let tdElement = $(this).closest('td')
     let id = tdElement.attr('data-id')
-    let newPrice = tdElement.find('input').val()
+    /* Parse le string du champ text en nombre */
+    let newPrice = parseInt(tdElement.find('input').val())
+    /* Check si newPrice différent de nombre */
+    if(isNaN(newPrice)){
+        alert('Not a number !')
+        return false;
+    }
+    /* Construit JSON à envoyer */
     let jsonData = { 
         "id":id, 
         "newPrice":newPrice 
@@ -47,5 +54,5 @@ $(document).on("click", ".fa-window-close", function(){
     tdElement.find('.prix').show()
     tdElement.find('.fa-window-close').remove()
     tdElement.find('.fa-check-square').remove()
-    tdElement.append('<i class="far fa-edit"></i>')
+    tdElement.append('<i class="far fa-edit cursorPointer"></i>')
  }
