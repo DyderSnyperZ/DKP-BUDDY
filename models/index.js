@@ -6,15 +6,24 @@ const Sequelize = require('sequelize');
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config.json')[env];
+const env_var = require('../config/env_var')
 const db = {};
 const bcrypt = require('bcrypt')
 
 let sequelize;
-if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], config);
+
+/* Si variable environnement exist */
+if (env_var) {
+  sequelize = new Sequelize(env_var.bdd_name, env_var.bdd_username, env_var.bdd_password, {
+    host:env_var.bdd_host,
+    dialect:env_var.bdd_dialect
+  });
+  /* Sinon utilisation par defautlt*/
 } else {
   sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
+
+
 
 fs
   .readdirSync(__dirname)

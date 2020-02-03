@@ -21,6 +21,8 @@ const passport = require('passport')
 
 const dateformat = require('dateformat')
 
+const env_var = require('../config/env_var')
+
 /* génère l'instance du serveur */
 const app = express() 
 
@@ -68,7 +70,7 @@ app.use(session({
     proxy: true,
     resave: false,
     saveUninitialized: true,
-    secret: 'buddy' }));
+    secret: env_var.session_secret }));
 
 /* serveur utilise bodyParser */
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -82,4 +84,4 @@ app.use(passport.session());
 app.use(router) 
 
 /* écoute sur le port 3000 */
-app.listen(3000) 
+app.listen(env_var.port)
