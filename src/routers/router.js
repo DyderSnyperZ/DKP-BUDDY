@@ -57,7 +57,7 @@ router.get('/home', async function (req, res) {
 })
 
 /* GET route page admin */
-router.get('/admin',  loggedIn, function (req, res) {
+router.get('/admin', loggedIn, function (req, res) {
     res.render('gestion', {
         layout: 'layout'
     })

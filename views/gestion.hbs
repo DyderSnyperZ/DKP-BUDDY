@@ -1,8 +1,8 @@
 <div class="container">
-    {{#if isUpload }}
+    <div class="row whiteColor text-white">
+        {{#if isUpload }}
     <span>Upload Success !!!! </span>
     {{/if }}
-    <div class="row whiteColor text-white">
         <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8 mx-auto text-center form p-4">
             <div class="px-2">
                 <form action="/import" method="post" class="justify-content-center" enctype="multipart/form-data">
