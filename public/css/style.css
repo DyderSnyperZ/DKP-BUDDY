@@ -4,7 +4,7 @@
     src: url('../fonts/lifecraft_font-webfont.woff2') format('woff2'),
          url('../fonts/lifecraft_font-webfont.woff') format('woff');
     font-weight: normal;
-    font-style: normal;
+	font-style: normal;
 
 }
 
@@ -13,6 +13,7 @@ body {
 	background-attachment: fixed;
 	background-position: center;
 	background-repeat: no-repeat;
+	color:#bbb;
 }
 
 /*** Phoenix © Sulfuron ***/
@@ -31,7 +32,7 @@ body {
 }
 
 .bg-greyWow{
-	background-color: #e0e0d2;
+	background-color:#242424;
 }
 
 .container-fluid{
@@ -41,12 +42,8 @@ body {
 }
 
 .colorTest {
-	background-color:rgba(232,232,232,0.3);
+	/* background-color:rgba(232,232,232,0.3); */
 	height: 100%;
-}
-
-.whiteColor{
-	background-color:rgba(224,224,210,0.6);
 }
 
 .marginLRowLeftRight{
@@ -110,4 +107,12 @@ div.dataTables_length {
 
 .cursorPointer {
 	cursor: pointer;
+}
+
+.navbar-light .navbar-nav .nav-link{
+	color:#bbb;
+}
+
+.opacity08{
+	opacity: 0.8;
 }
