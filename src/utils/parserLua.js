@@ -2,6 +2,7 @@ const lua2json = require('lua2json');
 const db = require('../../models/index')
 const Personnage = db.sequelize.models.Personnage
 const Historique = db.sequelize.models.Historique
+const Classe = db.sequelize.models.Classe
 
 async function ImportDataDkp(file) {
 
@@ -11,7 +12,8 @@ async function ImportDataDkp(file) {
      /*  Itèration dans variable */
      Object.values(tabPersonnages).forEach(async personnage => {
        
-      let classe = personnage.class
+      let classe = await Classe.findOne({ attributes:["id"], where: { nom: personnage.class } })
+         console.log(classe)
       let nom = personnage.player
       let dkp = personnage.dkp
       /* Check si User already exist */
@@ -22,14 +24,15 @@ async function ImportDataDkp(file) {
           await Personnage.create({
            dkp: dkp,
            nom: nom,
-           classe: classe,
-           actif:1
+           actif:1,
+           id_classe:classe.id
          }) 
        } else {
          /* Sinon le met à jour */
          await Personnage.update({
            dkp:dkp,
-           actif:1
+           actif:1,
+           id_classe:classe.id
          },
             {
               where: { nom: nom }

@@ -1,31 +1,35 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const Personnage = sequelize.define('Personnage', {
+  const Classe = sequelize.define('Classe', {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
       allowNull: false
     },
-    dkp: {
+    value: {
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 0
-    },
-    actif: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false,
-      defaultValue: false
     },
     nom: {
       type: DataTypes.STRING,
       allowNull: false,
       defaultValue: ''
     },
+    icon: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: ''
+    },
+    couleur: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      defaultValue: ''
+    }
   }, {});
-  Personnage.associate = function(models) {
-    Personnage.hasMany(models.Historique, {foreignKey: 'id_personnage'})
-    models.Historique.belongsTo(Personnage, {foreignKey: 'id_personnage'})
+  Classe.associate = function(models) {
+    Classe.hasMany(models.Personnage, {foreignKey: 'id_classe'})
   };
-  return Personnage;
+  return Classe;
 };

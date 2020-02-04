@@ -44,14 +44,14 @@ Object.keys(db).forEach(modelName => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-//sequelize.sync()
+//sequelize.sync({alter: true})
 
-/* const saltRounds = 10
-const myPlaintextPassword = 'admintest'
-
-bcrypt.hash(myPlaintextPassword, saltRounds, function(err, hash) {
-  sequelize.models.User.create({name: 'admin', password:hash})
-}); */
+// const saltRounds = 10
+// const myPlaintextPassword = 'admintest'
+//
+// bcrypt.hash(myPlaintextPassword, saltRounds, function(err, hash) {
+//   sequelize.models.User.create({name: 'admin', password:hash})
+// });
 
 /* sequelize.models.User.destroy({
   truncate: true
