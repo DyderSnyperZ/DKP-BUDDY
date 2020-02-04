@@ -30,6 +30,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   Classe.associate = function(models) {
     Classe.hasMany(models.Personnage, {foreignKey: 'id_classe'})
+    models.Personnage.belongsTo(Classe, {foreignKey: 'id_classe'})
   };
   return Classe;
 };

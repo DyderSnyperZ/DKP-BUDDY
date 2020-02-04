@@ -33,8 +33,15 @@ router.get('/home', async function (req, res) {
     try {
         /* Récupère liste Personnage */
         listeDKP = await db.sequelize.models.Personnage.findAll({
-            attributes:['nom', 'dkp']
+            attributes:['nom', 'dkp'],
+            include: [{ /* include = LEFT JOIN en SQL */
+                model: db.sequelize.models.Classe,
+                attributes:['couleur']
+            }],
         })
+
+        console.log(listeDKP)
+
          /* Récupère liste Historique */
         listeHistorique = await db.sequelize.models.Historique.findAll({
             attributes:['id_wowhead', 'date_loot', 'dkp_lost'],
