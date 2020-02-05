@@ -9,6 +9,7 @@ const Boss = db.sequelize.models.Boss
 const Loot = db.sequelize.models.Loot
 const Personnage = db.sequelize.models.Personnage
 const Raid = db.sequelize.models.Raid
+const BosseItem = db.sequelize.models.BosseItem
 
 
 /* lua2json.getVariable(file, 'MonDKP_Loot', async function (err, tabHistorique) {
@@ -19,35 +20,37 @@ const Raid = db.sequelize.models.Raid
   })
 }) */
 
-const file = '/Users/administrateur/Documents/Projets/DKP-BUDDY/src/db/items/Item_Raid_import.json'
+
+const file = '/mnt/c/Users/Didier/Documents/Projets/NetBeans/DKP/src/db/items/Item_Raid_import.json'
 jsonfile.readFile(file, function (err, listRaid) {
     if (err) console.error(err)
     listRaid.data.forEach((raid) => {
-        var NomRaid = raid.raid
-        Raid.create({  nom: NomRaid }).
-        then(function(lastRowRaid) {
-            var lastIdRaid = lastRowRaid.dataValues.id
-            raid.items.forEach((boss) => {
-                var NameBoss = boss.name
-                Boss.create({
-                    dkp_gain: 0,
-                    nom: NameBoss,
-                    id_raid: lastIdRaid
-                }).then(function(lastRowBoss) {
-                    var lastIdBoss = lastRowBoss.dataValues.id
-                    boss.loot.forEach((item) => {
-                        Item.create({
-                            prix: 0,
-                            classes_prio: 0,
-                            id_wowhead: item[1],
-                            id_boss: lastIdBoss
+        let NomRaid = raid.raid
+            Raid.create({  nom: NomRaid }).
+            then(function(lastRowRaid) {
+                let lastIdRaid = lastRowRaid.dataValues.id
+                raid.items.forEach((boss) => {
+                    let NameBoss = boss.name
+                        Boss.create({
+                            dkp_gain: 0,
+                            nom: NameBoss,
+                            id_raid: lastIdRaid
+                        }).then(function(lastRowBoss) {
+                            let lastIdBoss = lastRowBoss.dataValues.id
+                            boss.loot.forEach(async (item) => {
+                                let [fcItem, created] = await Item.findOrCreate({
+                                    where:{ id_wowhead:item[1]},
+                                    defaults: {
+                                        prix: -30,
+                                        id_wowhead: item[1]
+                                    }})
+                                    await BosseItem.create({id_boss:lastIdBoss,id_item:fcItem.id})
+                            })
                         })
-                    })
+
                 })
-             
             })
-        })
-       
+
     })
 })
 /*   Item.destroy({

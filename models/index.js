@@ -46,17 +46,14 @@ db.Sequelize = Sequelize;
 
 //sequelize.sync({alter: true})
 
-// const saltRounds = 10
-// const myPlaintextPassword = 'admintest'
-//
-// bcrypt.hash(myPlaintextPassword, saltRounds, function(err, hash) {
-//   sequelize.models.User.create({name: 'admin', password:hash})
-// });
+const saltRounds = 10
+const myPlaintextPassword = 'admintest'
 
-/* sequelize.models.User.destroy({
-  truncate: true
-}).then(() => {
-  console.log("Done");
-});  */
+bcrypt.hash(myPlaintextPassword, saltRounds, function(err, hash) {
+  sequelize.models.User.create({name: 'admin', password:hash})
+});
+
+
+
 
 module.exports = db;

@@ -88,5 +88,6 @@ module.exports = {
         'Personnage', // name of the Target model
         'id_classe' // key we want to remove
     );
+     // return;
   }
 };

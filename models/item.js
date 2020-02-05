@@ -5,17 +5,13 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    classes_prio: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
     id_wowhead: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: true,
+      unique: true
     }
   }, {});
   Item.associate = function(models) {
-    // associations can be defined here
   };
   return Item;
 };

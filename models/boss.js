@@ -11,7 +11,6 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {});
   Boss.associate = function(models) {
-    Boss.hasMany(models.Item, {foreignKey: 'id_boss'})
   };
   return Boss;
 };
