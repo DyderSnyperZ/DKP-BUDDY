@@ -40,18 +40,20 @@ router.get('/home', async function (req, res) {
             }],
         })
 
-        console.log(listeDKP)
-
          /* Récupère liste Historique */
         listeHistorique = await db.sequelize.models.Historique.findAll({
             attributes:['id_wowhead', 'date_loot', 'dkp_lost'],
             include: [{ /* include = LEFT JOIN en SQL */
                 model: db.sequelize.models.Personnage,
-                attributes:['nom']
+                attributes:['nom'],
+                include: [{ /* include = LEFT JOIN en SQL */
+                    model: db.sequelize.models.Classe,
+                    attributes:['couleur']
+                }]
             }],
             order: [['date_loot', 'DESC']]
         })
-        
+
     } catch (error) {
         throw new Error(error)
     }

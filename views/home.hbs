@@ -13,7 +13,7 @@
             <tbody>
                 {{#each listeDKP}}
                 <tr>
-                    <td style="color:{{Classe.couleur}}">{{nom}}</td>
+                    <td style="color:{{Classe.couleur}}" class="ft18">{{nom}}</td>
                     <td>{{dkp}}</td>
                 </tr>
                 {{/each}}
@@ -36,7 +36,7 @@
              <tbody>
                 {{#each listeHistorique}}
                 <tr>
-                    <td>{{Personnage.nom}}</td>
+                    <td style="color:{{Personnage.Classe.couleur}}" class="ft18">{{Personnage.nom}}</td>
                     <td>{{ historiqueString dkp_lost  }} pour <a href="https://en.classic.wowhead.com/item={{id_wowhead}}" target="_blank" data-wowhead="item={{id_wowhead}}"></a></td>
                     <td>le {{ timestampToDate date_loot }}</td>
                 </tr>
