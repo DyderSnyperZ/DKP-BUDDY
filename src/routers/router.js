@@ -42,7 +42,7 @@ router.get('/home', async function (req, res) {
 
          /* Récupère liste Historique */
         listeHistorique = await db.sequelize.models.Historique.findAll({
-            attributes:['id_wowhead', 'date_loot', 'dkp_lost'],
+            attributes:['id_wowhead', 'date_historique', 'dkp'],
             include: [{ /* include = LEFT JOIN en SQL */
                 model: db.sequelize.models.Personnage,
                 attributes:['nom'],
@@ -51,13 +51,15 @@ router.get('/home', async function (req, res) {
                     attributes:['couleur']
                 }]
             }],
-            order: [['date_loot', 'DESC']]
+            where:{id_action:1},
+            order: [['date_historique', 'DESC']]
         })
 
     } catch (error) {
         throw new Error(error)
     }
 
+    console.log(listeHistorique)
     res.render('home', {
         listeDKP: listeDKP,
         listeHistorique: listeHistorique,
@@ -87,8 +89,9 @@ router.post('/import', upload.single('monoliteFile'), async function (req, res) 
     const file = req.file
     let isUpload
     try {
-        await utils.ImportDataDkp(file)
-        await utils.ImportDateHistorique(file)
+        //await utils.ImportDataDkp(file)
+        //await utils.ImportDateHistoriqueLoot(file)
+        await utils.ImportDateHistoriqueOthers(file)
         isUpload = "Upload Success "
     } catch (error) {
         throw new Error("Probleme import", error)

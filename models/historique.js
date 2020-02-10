@@ -3,15 +3,19 @@ module.exports = (sequelize, DataTypes) => {
   const Historique = sequelize.define('Historique', {
     id_wowhead: {
       type :DataTypes.INTEGER,
-      allowNull: false
+      allowNull: true
     },
-    date_loot: {
+    date_historique: {
       type :DataTypes.DATE,
       allowNull: false
     },
-    dkp_lost: {
-      type :DataTypes.INTEGER,
+    dkp: {
+      type :DataTypes.DECIMAL(3, 1),
       allowNull: false
+    },
+    commentaire: {
+      type :DataTypes.STRING,
+      allowNull: true
     },
   }, {});
   Historique.associate = function(models) {

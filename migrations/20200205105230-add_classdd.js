@@ -2,7 +2,13 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return /*queryInterface.removeColumn('Items', 'id_boss')*/
+    return queryInterface.bulkInsert('ActionHistoriques', [{
+      action:'Loot'
+    },
+      {
+        action:'Autres'
+      }
+    ]);
   },
 
   down: (queryInterface, Sequelize) => {
