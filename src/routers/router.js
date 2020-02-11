@@ -33,7 +33,7 @@ router.get('/home', async function (req, res) {
     try {
         /* Récupère liste Personnage */
         listeDKP = await db.sequelize.models.Personnage.findAll({
-            attributes:['nom', 'dkp'],
+            attributes:['nom', 'dkp', 'id'],
             include: [{ /* include = LEFT JOIN en SQL */
                 model: db.sequelize.models.Classe,
                 attributes:['couleur']
@@ -45,7 +45,7 @@ router.get('/home', async function (req, res) {
             attributes:['id_wowhead', 'date_historique', 'dkp'],
             include: [{ /* include = LEFT JOIN en SQL */
                 model: db.sequelize.models.Personnage,
-                attributes:['nom'],
+                attributes:['nom', 'id'],
                 include: [{ /* include = LEFT JOIN en SQL */
                     model: db.sequelize.models.Classe,
                     attributes:['couleur']
@@ -58,8 +58,6 @@ router.get('/home', async function (req, res) {
     } catch (error) {
         throw new Error(error)
     }
-
-    console.log(listeHistorique)
     res.render('home', {
         listeDKP: listeDKP,
         listeHistorique: listeHistorique,
@@ -89,8 +87,9 @@ router.post('/import', upload.single('monoliteFile'), async function (req, res) 
     const file = req.file
     let isUpload
     try {
-        //await utils.ImportDataDkp(file)
-        //await utils.ImportDateHistoriqueLoot(file)
+        /* Fonction ImporDKP Personnage*/
+        await utils.ImportDataDkp(file)
+        await utils.ImportDateHistoriqueLoot(file)
         await utils.ImportDateHistoriqueOthers(file)
         isUpload = "Upload Success "
     } catch (error) {
@@ -148,6 +147,47 @@ router.get('/items', async (req, res) => {
         layout: 'layout',
         listeAllItemByRaid: listeAllItemByRaid,
         isModifiable: isModifiable
+    })
+})
+
+/* GET route items page */
+router.get('/historiquePersonnage/:id', async (req, res) => {
+
+    let personnageId = parseInt(req.params.id,10)
+    let classPersonnage
+    let historiquePersonnage
+    try {
+        classPersonnage = await db.sequelize.models.Personnage.findByPk(personnageId, {
+            include: [{
+                model: db.sequelize.models.Classe,
+            }],
+        })
+
+        historiquePersonnage = await db.sequelize.models.Historique.findAll({
+            include: [{
+                   model: db.sequelize.models.ActionHistorique,
+            }],
+            where:{id_personnage:personnageId},
+            order: [['date_historique', 'DESC']]
+        })
+        // historiquePersonnage = await db.sequelize.models.Personnage.findByPk(personnageId,{
+        //     include: [{
+        //         model: db.sequelize.models.Historique,
+        //         include: [{
+        //             model: db.sequelize.models.ActionHistorique,
+        //         }],
+        //     }],
+        // })
+    //console.log(historiquePersonnage)
+    } catch (error) {
+        throw new Error ('Problème récupération historique Personnage',error)
+    }
+
+    /* Render la vue items */
+    res.render('historiquePersonnage', {
+        layout: 'layout',
+        historiquePersonnage: historiquePersonnage,
+        classPersonnage:classPersonnage,
     })
 })
 

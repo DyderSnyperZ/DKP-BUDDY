@@ -51,6 +51,14 @@ const hbs = exphbs.create({
                 return false
             }
             
+        },
+        ifAction(id_action){
+            if(id_action === 1){
+                return true
+            }else if(id_action === 2){
+                return false
+            }
+
         }
     }
 })

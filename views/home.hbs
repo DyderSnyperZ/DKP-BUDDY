@@ -3,7 +3,7 @@
         <div class="row justify-content-md-center marginLRowLeftRight0">
              <h1>TABLEAU DKP</h1>
         </div>
-        <table id="tab_Liste_Dpk" class="table table-striped table-bordered" style="width:100%">
+        <table id="tab_Liste_Dpk" class="table table-striped table-bordered helvetica" style="width:100%">
             <thead>
                 <tr>
                     <th>Nom</th>
@@ -13,7 +13,7 @@
             <tbody>
                 {{#each listeDKP}}
                 <tr>
-                    <td style="color:{{Classe.couleur}}" class="ft18">{{nom}}</td>
+                    <td class="ft18 bold"><a style="color:{{Classe.couleur}}" href="/historiquePersonnage/{{id}}" target="_blank">{{nom}}</a></td>
                     <td>{{dkp}}</td>
                 </tr>
                 {{/each}}
@@ -24,7 +24,7 @@
          <div class="row justify-content-md-center marginLRowLeftRight0">
              <h1>HISTORIQUE</h1>
         </div>
-         <table id="tab_Historique" class="table table-striped table-bordered" style="width:100%">
+         <table id="tab_Historique" class="table table-striped table-bordered helvetica" style="width:100%">
 
              <thead>
              <tr>
@@ -36,7 +36,7 @@
              <tbody>
                 {{#each listeHistorique}}
                 <tr>
-                    <td style="color:{{Personnage.Classe.couleur}}" class="ft18">{{Personnage.nom}}</td>
+                    <td class="ft18 bold"><a style="color:{{Personnage.Classe.couleur}}" href="/historiquePersonnage/{{Personnage.id}}" target="_blank">{{Personnage.nom}}</a></td>
                     <td>{{ historiqueString dkp  }} pour <a href="https://en.classic.wowhead.com/item={{id_wowhead}}" target="_blank" data-wowhead="item={{id_wowhead}}"></a></td>
                     <td>le {{ timestampToDate date_historique }}</td>
                 </tr>
@@ -58,8 +58,8 @@
          "scrollCollapse": true,
          "paging":         false,
          "columnDefs": [
-             { "className": "helvetica", "width": "50%", "targets": 1 },
-             { "className": "helvetica", "targets": 2 }
+             { "width": "50%", "targets": 1 },
+             { "targets": 2 }
          ],
          "sorting": false
      });
