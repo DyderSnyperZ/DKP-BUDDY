@@ -70,7 +70,7 @@ router.get('/home', async function (req, res) {
 })
 
 /* GET route page admin */
-router.get('/admin', /*loggedIn,*/ async function (req, res) {
+router.get('/admin', loggedIn, async function (req, res) {
 
     /* Récupère valeur argument uploaded*/
     let isUploaded = req.query.uploaded
