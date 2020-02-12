@@ -28,6 +28,7 @@ const app = express()
 
 /* défini le chemin de fichier pour les assets */
 const publicDirectoryPath = path.join(__dirname, '../public')
+const uploadDirectoryPath = path.join(__dirname, '../')
 
 /* initialisation du gestionnaire de templating + création fonctions utilisable dans les template  */
 const hbs = exphbs.create({
@@ -70,7 +71,8 @@ app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
 
 /* config utilisation URL asset */
-app.use(express.static(publicDirectoryPath)) 
+app.use(express.static(publicDirectoryPath))
+app.use(express.static(uploadDirectoryPath))
 
 /* config session */
 app.use(session({

@@ -1,13 +1,29 @@
 <div class="container bg-greyWow opacity08">
     <div class="row whiteColor text-white">
-        {{#if isUpload }}
-    <span>Upload Success !!!! </span>
-    {{/if }}
-        <div class="col-xl-8 col-lg-8 col-md-8 col-sm-8 mx-auto text-center form p-4">
+        <div class="col-xl-10 col-lg-10 col-md-10 col-sm-10 mx-auto text-center form p-4">
+            {{#if isUpload }}
+            <span>Upload Success !!!! </span>
+            {{/if }}
             <div class="px-2">
                 <form action="/import" method="post" class="justify-content-center" enctype="multipart/form-data">
                     <div class="row">
                         <div class="col-sm-6">
+                            <table id="tab_Liste_fichier" class="table table-striped table-bordered helvetica" style="width:100%">
+                                <thead>
+                                <tr>
+                                    <th>Fichier</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {{#each tabFiles}}
+                                <tr>
+                                    <td><a href="{{ path }}" download><span>{{ name }}</span></a></td>
+                                </tr>
+                                {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-sm-4">
                             <input type="file" accept=".lua" class="form-control-file" id="monoliteFile" name="monoliteFile" required>
                         </div>
                         <div class="col-sm-2">
@@ -19,3 +35,13 @@
         </div>
     </div>
 </div>
+
+<script>
+    $(document).ready(function() {
+        $('#tab_Liste_fichier').DataTable({
+            searching: false,
+            paging:false,
+            bInfo: false,
+        });
+    } );
+</script>

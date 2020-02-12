@@ -5,6 +5,9 @@ const db = require('../../models/index')
 const { passport, loggedIn, /* loggedInForUpdate */ } = require('../middleware/passport')
 const multer  = require('multer')
 const utils = require('../utils/parserLua')
+const dateformat = require('dateformat')
+const dir = require('node-dir');
+const fsPromises = require('fs').promises;
 
 /* modification lib de gestion de fichier */
 let storage = multer.diskStorage({
@@ -14,7 +17,8 @@ let storage = multer.diskStorage({
     },
     /* renomme fichier sauvegarde imports */ 
     filename: function (req, file, cb) {
-      cb(null, file.fieldname + '-' + Date.now() + '.lua')
+        let date= dateformat(new Date(), "dd-mm-yy_HH:MM")
+      cb(null, file.fieldname + '-' + date + '.lua')
     }
   })
   
@@ -66,9 +70,25 @@ router.get('/home', async function (req, res) {
 })
 
 /* GET route page admin */
-router.get('/admin', loggedIn, function (req, res) {
+router.get('/admin', /*loggedIn,*/ async function (req, res) {
+
+    /* Récupère valeur argument uploaded*/
+    let isUploaded = req.query.uploaded
+
+    /* Récupère liste fichiers dans upload*/
+    let tabFileDir = await fsPromises.readdir('uploads')
+    let tabFiles = []
+    /* Parcours mon tableau de fichier et construit mon nouveau tableau d'objet*/
+    tabFileDir.forEach((fileName)=> {
+        /* Format name: NomFichier, path: PathFichiers */
+        let infos = {name:fileName,path:'uploads/'+fileName}
+        tabFiles.push(infos)
+    })
+
     res.render('gestion', {
-        layout: 'layout'
+        layout: 'layout',
+        tabFiles:tabFiles,
+        isUpload:isUploaded
     })
 })
 
@@ -83,23 +103,28 @@ router.get('/login', function (req, res) {
 /* POST route login page admin */
 /* Utilisation de la fonction loggedIn comme middleware */
 router.post('/import', upload.single('monoliteFile'), async function (req, res) {
-    
-    const file = req.file
-    let isUpload
+
+    /* Check si nombre uploads supérieur à 3, si supérieur alors supprime le plus ancien*/
+    let tabFiles = await dir.promiseFiles('uploads/')
+    if(tabFiles.length > 3){
+        await fs.unlink(tabFiles[0], (err) => {
+            if (err) throw err;
+        });
+    }
+
+    let file = req.file
     try {
         /* Fonction ImporDKP Personnage*/
         await utils.ImportDataDkp(file)
         await utils.ImportDateHistoriqueLoot(file)
         await utils.ImportDateHistoriqueOthers(file)
         isUpload = "Upload Success "
+
     } catch (error) {
         throw new Error("Probleme import", error)
     }
-    
-    res.render('gestion', {
-        layout: 'layout',
-        isUpload: isUpload
-    })
+
+    res.redirect('/admin?uploaded=true')
 })
 
 /* POST route login page admin*/
