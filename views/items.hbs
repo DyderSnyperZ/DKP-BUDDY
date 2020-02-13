@@ -29,18 +29,30 @@
                         <tr>
                             <th>Item</th>
                             <th>Prix</th>
+                            <th>Classe Prio</th>
                         </tr>
                         </thead>
                     <tbody>
                     {{#each Items}}
-                        <tr>
+                        <tr data-id="{{id}}">
                             <td><a class="helvetica" href="https://en.classic.wowhead.com/item={{id_wowhead}}" target="_blank" data-wowhead="item={{id_wowhead}}"></a></td>
-                            <td data-id="{{id_wowhead}}">
-                                <span class="prix">{{ prix }}</span>
+                            <td data-id="{{id}}">
+                                        <span class="prix">{{ prix }}</span>
+                                        {{#if ../../../isModifiable }}
+                                        <input type="text" class="form-control w50 none" value="{{ prix }}">
+                                        <i class="far fa-edit edit cursorPointer"></i>
+                                        {{/if }}
+                            </td>
+                            <td>
+                                {{#each Classes}}
+                                    <img src="/img/{{icon}}">
+                                {{/each}}
                                 {{#if ../../../isModifiable }}
-                                    <input type="text" class="form-control w50 none" value="{{ prix }}">
-                                    <i class="far fa-edit cursorPointer"></i></td>
+                                    <i class="far fa-edit classe cursorPointer"></i>
+                                    <select id="multiSelect-{{ id }}" classe="selectClasse" style="display: none;" multiple="multiple">
+                                    </select>
                                 {{/if }}
+                            </td>
                         </tr>
                     {{/each}}
                     </tbody>

@@ -44,6 +44,8 @@ Object.keys(db).forEach(modelName => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
+// db.sequelize.models.ClasseItem.create({  id_classe: 1, id_item:1  })
+// db.sequelize.models.ClasseItem.create({  id_classe: 2, id_item:1  })
 //sequelize.sync({alter: true})
 
 // const saltRounds = 10

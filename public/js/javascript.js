@@ -1,14 +1,27 @@
 
 // Gestion click bouton editer prix
-$(document).on("click", ".fa-edit", function(){
+$(document).on("click", ".edit", function(){
     let tdElement = $(this).closest('td')
-
     tdElement.find('input').show()
     tdElement.find('.fa-edit').remove()
     tdElement.find('.prix').hide()
     tdElement.append('<i class="far fa-check-square marginLRowLeftRight cursorPointer"></i>')
     tdElement.append('<i class="far fa-window-close cursorPointer"></i>')
-    
+})
+
+$(document).on("click", ".classe", function(){
+    let idItem = $(this).closest('tr').attr('data-id')
+    let tdElement = $(this).closest('td')
+    tdElement.find('.classe').remove()
+    $.get( "/getClasses", { id: idItem },function( tabClasses ) {
+        $.each(tabClasses, function (i, item){
+            $('#multiSelect-'+idItem).append('<option value="' + item.id + '">' + item.nom + '</option>');
+        })
+        $('#multiSelect-'+idItem).multiselect();
+        $('#multiSelect-'+idItem).show();
+    });
+    tdElement.append('<i class="far fa-check-square marginLRowLeftRight cursorPointer"></i>')
+    tdElement.append('<i class="far fa-window-close cursorPointer"></i>')
 })
 
 // Gestion click bouton annuler prix
@@ -20,7 +33,7 @@ $(document).on("click", ".fa-window-close", function(){
 // Gestion click update Item
  $(document).on("click", ".fa-check-square", function(){
     let tdElement = $(this).closest('td')
-    let id = tdElement.attr('data-id')
+    let id = $(this).closest('tr').attr('data-id')
     /* Parse le string du champ text en nombre */
     let newPrice = parseInt(tdElement.find('input').val())
     /* Check si newPrice différent de nombre */
