@@ -44,18 +44,16 @@ Object.keys(db).forEach(modelName => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-// db.sequelize.models.ClasseItem.create({  id_classe: 1, id_item:1  })
-// db.sequelize.models.ClasseItem.create({  id_classe: 2, id_item:1  })
+//db.sequelize.models.ClasseItem.create({  id_classe: 1, id_item:1  })
+//db.sequelize.models.ClasseItem.create({  id_classe: 2, id_item:1  })
 //sequelize.sync({alter: true})
 
-// const saltRounds = 10
-// const myPlaintextPassword = 'admintest'
-//
-// bcrypt.hash(myPlaintextPassword, saltRounds, function(err, hash) {
-//   sequelize.models.User.create({name: 'admin', password:hash})
-// });
+/*  const saltRounds = 10
+ const myPlaintextPassword = 'admintest'
 
-
+ bcrypt.hash(myPlaintextPassword, saltRounds, function(err, hash) {
+   sequelize.models.User.create({name: 'admin', password:hash})
+ }); */
 
 
 module.exports = db;

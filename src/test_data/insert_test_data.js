@@ -2,7 +2,8 @@ var crypto = require('crypto')
 const jsonfile = require('jsonfile')
 const db = require('../../models/index')
 const lua2json = require('lua2json');
-//const file = '/home/dyder/Documents/Projets/DKP/src/db/items/Item_Raid_import.json'
+
+const file = '/Users/didierjoseph/Documents/Projets/DKP-BUDDY/src/db/items/Item_Raid_import.json'
 //const file = '/home/dyder/Téléchargements/MonolithDKP.lua'
 const Item = db.sequelize.models.Item
 const Boss = db.sequelize.models.Boss
@@ -21,8 +22,9 @@ const BosseItem = db.sequelize.models.BosseItem
 }) */
 
 
-const file = '/mnt/c/Users/Didier/Documents/Projets/NetBeans/DKP/src/db/items/Item_Raid_import.json'
+//const file = '/mnt/c/Users/Didier/Documents/Projets/NetBeans/DKP/src/db/items/Item_Raid_import.json'
 jsonfile.readFile(file, function (err, listRaid) {
+
     if (err) console.error(err)
     listRaid.data.forEach((raid) => {
         let NomRaid = raid.raid

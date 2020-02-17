@@ -249,22 +249,35 @@ router.post('/updateClassePrio/:id', async (req, res) => {
 router.get('/getClasses', async (req, res) => {
 
     let id = req.query.id
-
+    let html
     try {
+        /* Récupère les classes prio de l'item */
         let tabClassePrio = await Item.findByPk(id, {
             include: [{
                 model: db.sequelize.models.Classe,
                 attributes:['id']
             }],
         })
+
+        /* Récupère toute les classes */
         let tabClasses = await Classe.findAll({
             attributes: ['id', 'nom']
         })
-        let data = {tabClassePrio:tabClassePrio.Classes, tabClasses: tabClasses}
 
-        res.send(data)
+        /* Creer mon html de retour pour le select option*/
+        html ='<option>--</option>'
+        tabClasses.forEach(classe => {
+            html+=`<option value='${classe.id}'`
+            /* Permet de checker si dans tabClassePrio j'ai l'id d'une classe */
+            if (tabClassePrio.Classes.some(e => e.id === classe.id)) {
+                html+='selected'
+              }
+              html+=`>${classe.nom}</option>`
+        })
+
+        res.send(html)
     } catch (error) {
-        throw new Error ('Problème récupération historique Personnage',error)
+        throw new Error ('Problème récupération Classe Personnages',error)
     }
 
 })

@@ -14,9 +14,8 @@ $(document).on("click", ".classe", function(){
     let tdElement = $(this).closest('td')
     tdElement.find('.classe').remove()
     $.get( "/getClasses", { id: idItem },function( tabClasses ) {
-        $.each(tabClasses, function (i, item){
-            $('#multiSelect-'+idItem).append('<option value="' + item.id + '">' + item.nom + '</option>');
-        })
+        console.log(tabClasses)
+        $('#multiSelect-'+idItem).append(tabClasses);
         $('#multiSelect-'+idItem).multiselect();
         $('#multiSelect-'+idItem).show();
     });
