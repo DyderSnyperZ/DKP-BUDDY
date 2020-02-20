@@ -40,7 +40,7 @@
                                         <span class="prix">{{ prix }}</span>
                                         {{#if ../../../isModifiable }}
                                         <input type="text" class="form-control w50 none" value="{{ prix }}">
-                                        <i class="far fa-edit edit cursorPointer"></i>
+                                        <i class="far fa-edit editPrixItem cursorPointer"></i>
                                         {{/if }}
                             </td>
                             <td>
@@ -48,7 +48,7 @@
                                     <img src="/img/{{icon}}">
                                 {{/each}}
                                 {{#if ../../../isModifiable }}
-                                    <i class="far fa-edit classe cursorPointer"></i>
+                                    <i class="far fa-edit editClassePrio cursorPointer"></i>
                                     <select id="multiSelect-{{ id }}" classe="selectClasse" style="display: none;" multiple="multiple">
                                     </select>
                                 {{/if }}

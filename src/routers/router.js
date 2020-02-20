@@ -35,6 +35,9 @@ const Item = db.sequelize.models.Item
 /* Création instance Classe */
 const Classe = db.sequelize.models.Classe
 
+/* Création instance ClasseItem */
+const ClasseItem = db.sequelize.models.ClasseItem
+
 /* GET route homepage */
 router.get('/home', async function (req, res) {
 
@@ -226,19 +229,28 @@ router.get('/historiquePersonnage/:id', async (req, res) => {
 })
 
 /* GET route classe Prio par items */
-router.post('/updateClassePrio/:id', async (req, res) => {
+router.post('/updateClassePrio', async (req, res) => {
 
-    let id = req.params.id
-    console.log(id)
-    let classePrio
+    let id = req.body.id
+    let tabclassePrioSelected = JSON.parse(req.body.tabClassePrio)
+    let tabIcons
+    // let classePrio
     try {
-        classePrio = await Items.findByPk(id, {
-            include: [{
-                model: db.sequelize.models.Classe,
-            }],
+       await ClasseItem.destroy({
+            where: {id_item: id},
         })
-        console.log(classePrio)
-        res.send(200)
+        tabclassePrioSelected.forEach(async classe => {
+            await ClasseItem.create({id_item:id, id_classe:classe})
+        })
+
+        // classPersonnage = await Item.findByPk(id, {
+        //     include: [{
+        //         model: db.sequelize.models.Classe,
+        //         attributes:['icon']
+        //     }]
+        // })
+
+        res.sendStatus(200)
     } catch (error) {
         throw new Error ('Problème récupération historique Personnage',error)
     }
@@ -295,7 +307,7 @@ router.post('/updatePrice', /*loggedIn,*/ async (req, res) => {
                     id: id
                 }
               });
-              res.send(200)
+              res.sendStatus(200)
         } catch (error) {
             throw new Error('Erreur update prix')
         }
