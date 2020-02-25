@@ -73,7 +73,7 @@ $(document).on("click", ".validClassePrio", function(){
     let id = $(this).closest('tr').attr('data-id')
     /* Parse le string du champ text en nombre */
     let classePrioSelected =  $('#multiSelect-'+id).val()
-    console.log(classePrioSelected)
+
     /* Construit JSON à envoyer */
     let jsonData = {
         id:id,
@@ -88,6 +88,58 @@ $(document).on("click", ".validClassePrio", function(){
         },
         error: function(error){
             alert('Pb update Classe Prio')
+        }
+    })
+})
+
+// Ajout Personnage inactif
+$(document).on("click", ".supPersonnage", function(){
+    let id = $(this).closest('tr').attr('data-id')
+    let nom = $(this).closest('tr').attr('data-nom')
+
+    /* Construit JSON à envoyer */
+    let jsonData = {
+        id:id,
+        nom:nom,
+        actif:false
+    }
+
+    $.ajax({
+        url:'/updateStatusPersonnage',
+        type: 'POST',
+        data: jsonData,
+        success: function(){
+            alert('Joueur ' + nom + ' inactif !')
+            location.reload()
+        },
+        error: function(error){
+            alert('Pb update Joueur')
+        }
+    })
+})
+
+// Ajout Personnage actif
+$(document).on("click", ".addPersonnage", function(){
+    let id = $(this).closest('tr').attr('data-id')
+    let nom = $(this).closest('tr').attr('data-nom')
+
+    /* Construit JSON à envoyer */
+    let jsonData = {
+        id:id,
+        nom:nom,
+        actif:true
+    }
+
+    $.ajax({
+        url:'/updateStatusPersonnage',
+        type: 'POST',
+        data: jsonData,
+        success: function(){
+            alert('Joueur ' + nom + ' actif !')
+            location.reload()
+        },
+        error: function(error){
+            alert('Pb update Joueur')
         }
     })
 })

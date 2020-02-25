@@ -125,3 +125,11 @@ div.dataTables_length {
 .bold{
 	font-weight:bold;
 }
+
+.colorRed{
+	color:red;
+}
+
+.colorGreen{
+	color:green;
+}

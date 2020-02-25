@@ -38,6 +38,12 @@ const Classe = db.sequelize.models.Classe
 /* Création instance ClasseItem */
 const ClasseItem = db.sequelize.models.ClasseItem
 
+/* Création instance Personnage */
+const Personnage = db.sequelize.models.Personnage
+
+/* Création instance SuppressionPersonnage */
+const SuppressionPersonnage = db.sequelize.models.SuppressionPersonnage
+
 /* GET route homepage */
 router.get('/home', async function (req, res) {
 
@@ -49,6 +55,7 @@ router.get('/home', async function (req, res) {
                 model: db.sequelize.models.Classe,
                 attributes:['couleur']
             }],
+            where:{actif:1}
         })
 
          /* Récupère liste Historique */
@@ -57,6 +64,7 @@ router.get('/home', async function (req, res) {
             include: [{ /* include = LEFT JOIN en SQL */
                 model: db.sequelize.models.Personnage,
                 attributes:['nom', 'id'],
+                where:{actif:1},
                 include: [{ /* include = LEFT JOIN en SQL */
                     model: db.sequelize.models.Classe,
                     attributes:['couleur']
@@ -77,10 +85,32 @@ router.get('/home', async function (req, res) {
 })
 
 /* GET route page admin */
-router.get('/admin', loggedIn, async function (req, res) {
+router.get('/admin', /*loggedIn,*/ async function (req, res) {
 
     /* Récupère valeur argument uploaded*/
     let isUploaded = req.query.uploaded
+    let listePersonnageActif
+    let listePersonnageInactif
+
+    try {
+        listePersonnageActif =  await Personnage.findAll({
+            include: [{ /* include = LEFT JOIN en SQL */
+                model: db.sequelize.models.Classe,
+                attributes:['couleur']
+            }],
+            where:{actif:1}
+        })
+
+        listePersonnageInactif = await Personnage.findAll({
+            include: [{ /* include = LEFT JOIN en SQL */
+                model: db.sequelize.models.Classe,
+                attributes:['couleur']
+            }],
+            where:{actif:0}
+        })
+    }catch (e) {
+        throw new Error ('Problème récupération liste Personnage',error)
+    }
 
     /* Récupère liste fichiers dans upload*/
     let tabFileDir = await fsPromises.readdir('uploads')
@@ -95,7 +125,9 @@ router.get('/admin', loggedIn, async function (req, res) {
     res.render('gestion', {
         layout: 'layout',
         tabFiles:tabFiles,
-        isUpload:isUploaded
+        isUpload:isUploaded,
+        listePersonnageActif: listePersonnageActif,
+        listePersonnageInactif:listePersonnageInactif
     })
 })
 
@@ -207,15 +239,6 @@ router.get('/historiquePersonnage/:id', async (req, res) => {
             where:{id_personnage:personnageId},
             order: [['date_historique', 'DESC']]
         })
-        // historiquePersonnage = await db.sequelize.models.Personnage.findByPk(personnageId,{
-        //     include: [{
-        //         model: db.sequelize.models.Historique,
-        //         include: [{
-        //             model: db.sequelize.models.ActionHistorique,
-        //         }],
-        //     }],
-        // })
-    //console.log(historiquePersonnage)
     } catch (error) {
         throw new Error ('Problème récupération historique Personnage',error)
     }
@@ -253,6 +276,27 @@ router.post('/updateClassePrio', async (req, res) => {
         res.sendStatus(200)
     } catch (error) {
         throw new Error ('Problème récupération historique Personnage',error)
+    }
+
+})
+
+/* GET route updateStatusPersonnage */
+router.post('/updateStatusPersonnage', /*loggedIn,*/ async (req, res) => {
+
+    let id = req.body.id
+    let nom = req.body.nom
+    let actif = req.body.actif
+
+    /*Met à jour le status du Personnage*/
+    try {
+        await Personnage.update(
+            {actif:actif},
+            {where: {id: id},
+        })
+
+        res.sendStatus(200)
+    } catch (error) {
+        throw new Error ('Problème update Status Personnage',error)
     }
 
 })

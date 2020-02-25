@@ -16,7 +16,8 @@ let sequelize;
 if (env_var) {
   sequelize = new Sequelize(env_var.bdd_name, env_var.bdd_username, env_var.bdd_password, {
     host:env_var.bdd_host,
-    dialect:env_var.bdd_dialect
+    dialect:env_var.bdd_dialect,
+    logging: false
   });
   /* Sinon utilisation par defautlt*/
 } else {

@@ -15,25 +15,24 @@ async function ImportDataDkp(file) {
      Object.values(tabPersonnages).forEach(async personnage => {
        
       let classe = await Classe.findOne({ attributes:["id"], where: { nom: personnage.class } })
-         console.log(classe)
       let nom = personnage.player
       let dkp = personnage.dkp
       /* Check si User already exist */
-      let exist = await Personnage.findOne({ where: { nom: nom } })
-      
+      let isExist = await Personnage.findOne({ where: { nom: nom } })
+
       /* Si existe pas le créer */
-       if (exist===null) {
+         if (isExist===null) {
           await Personnage.create({
            dkp: dkp,
            nom: nom,
            actif:1,
            id_classe:classe.id
-         }) 
+         })
        } else {
          /* Sinon le met à jour */
          await Personnage.update({
            dkp:dkp,
-           actif:1,
+           actif:isExist.actif,
            id_classe:classe.id
          },
             {

@@ -5,6 +5,9 @@
             <span>Upload Success !!!! </span>
             {{/if }}
             <div class="px-2">
+                <div class="row justify-content-md-center marginLRowLeftRight0">
+                    <h1>GESTION HISTORIQUE</h1>
+                </div>
                 <form action="/import" method="post" class="justify-content-center" enctype="multipart/form-data">
                     <div class="row">
                         <div class="col-sm-6">
@@ -31,6 +34,56 @@
                         </div>
                     </div>
                 </form>
+                <div class="row justify-content-md-center marginLRowLeftRight0 paddingTopBot">
+                    <h1>GESTION JOUEUR</h1>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="row justify-content-md-center marginLRowLeftRight0 paddingTopBot">
+                            <h2>Liste Joueur actif</h2>
+                        </div>
+                        <table id="tab_Liste_personnage" class="table table-striped table-bordered helvetica" style="width:100%">
+                            <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Activité</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {{#each listePersonnageActif}}
+                            <tr data-id="{{ id }}" data-nom="{{ nom }}">
+                                <td class="ft18 bold" style="color:{{Classe.couleur}}" >{{nom}}</td>
+                                <td><i class="far fa-check-square cursorPointer supPersonnage colorGreen"></i></td>
+                            </tr>
+                            {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="row justify-content-md-center marginLRowLeftRight0 paddingTopBot">
+                            <h2>Liste Joueur inactif</h2>
+                        </div>
+                        <table id="tab_Liste_suppression_personnage" class="table table-striped table-bordered helvetica" style="width:100%">
+                            <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Activité</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {{#each listePersonnageInactif}}
+                            <tr data-id="{{ id }}" data-nom="{{ nom }}">
+                                <td class="ft18 bold" style="color:{{Classe.couleur}}" >{{nom}}</td>
+                                <td><i class="far fa-window-close cursorPointer addPersonnage colorRed"></i></td>
+                            </tr>
+                            {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-sm-6">
+
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -42,6 +95,16 @@
             searching: false,
             paging:false,
             bInfo: false,
+        });
+        $('#tab_Liste_suppression_personnage').DataTable({
+            "scrollY":        "490px",
+            "scrollCollapse": true,
+            "paging":         false,
+        });
+        $('#tab_Liste_personnage').DataTable({
+            "scrollY":        "490px",
+            "scrollCollapse": true,
+            "paging":         false,
         });
     } );
 </script>
