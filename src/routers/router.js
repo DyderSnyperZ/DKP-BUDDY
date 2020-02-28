@@ -179,8 +179,8 @@ router.post('/login', passport.authenticate('local', { failureRedirect: '/login'
 router.get('/items', async (req, res) => {
 
     let isModifiable = false
-    //if(req.user)
-    isModifiable = true
+    if(req.user)
+        isModifiable = true
 
     /* Création instance Raid */
     let Raid = db.sequelize.models.Raid
