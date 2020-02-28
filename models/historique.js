@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     dkp: {
-      type :DataTypes.DECIMAL(3, 1),
+      type :DataTypes.DECIMAL(7, 1),
       allowNull: false
     },
     commentaire: {

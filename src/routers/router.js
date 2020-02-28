@@ -85,7 +85,7 @@ router.get('/home', async function (req, res) {
 })
 
 /* GET route page admin */
-router.get('/admin', /*loggedIn,*/ async function (req, res) {
+router.get('/admin', loggedIn, async function (req, res) {
 
     /* Récupère valeur argument uploaded*/
     let isUploaded = req.query.uploaded
@@ -281,7 +281,7 @@ router.post('/updateClassePrio', async (req, res) => {
 })
 
 /* GET route updateStatusPersonnage */
-router.post('/updateStatusPersonnage', /*loggedIn,*/ async (req, res) => {
+router.post('/updateStatusPersonnage', loggedIn, async (req, res) => {
 
     let id = req.body.id
     let nom = req.body.nom
@@ -340,7 +340,7 @@ router.get('/getClasses', async (req, res) => {
 
 /* POST route update Prix */
 /* Utilisation du middleware afin de vérifier que l'admin est connecté avant de modifier le prix */
-router.post('/updatePrice', /*loggedIn,*/ async (req, res) => {
+router.post('/updatePrice', loggedIn, async (req, res) => {
 
         let id = req.body.id
         let newPrice = req.body.newPrice
