@@ -6,7 +6,7 @@ const Sequelize = require('sequelize');
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/config.json')[env];
-const env_var = require('../config/env_var')
+const env_var = require('../config/env_var.json')
 const db = {};
 const bcrypt = require('bcrypt')
 
@@ -47,7 +47,7 @@ db.Sequelize = Sequelize;
 
 //db.sequelize.models.ClasseItem.create({  id_classe: 1, id_item:1  })
 //db.sequelize.models.ClasseItem.create({  id_classe: 2, id_item:1  })
-sequelize.sync({alter: true})
+//sequelize.sync({alter: true})
 
 /*  const saltRounds = 10
  const myPlaintextPassword = 'admintest'

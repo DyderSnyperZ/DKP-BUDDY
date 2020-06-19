@@ -131,6 +131,13 @@ router.get('/admin', loggedIn, async function (req, res) {
     })
 })
 
+/* GET route page liens */
+router.get('/liens', async function (req, res) {
+    res.render('liens', {
+        layout: 'layout'
+    })
+})
+
 /* GET route login page admin */
 /* Utilisation de la fonction loggedIn comme middleware */
 router.get('/login', function (req, res) {
