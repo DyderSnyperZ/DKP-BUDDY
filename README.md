@@ -1,35 +1,19 @@
 # DKP-BUDDY
 
-Pour tester en local, vous devez ajoutez dans le dossier config un fichier json qui correspond à vos variables d'environnement et les
-parametrer selon votre configuration.
+Personnal project to deep understanding nodeJS and help a friend of mine.
 
-Ce fichier est comme ceci :
+The purpose was to create a web application tool to managing points earned by players from my personnal World of Warcraft guild.
 
-{
-  "port": "",
-  "session_secret": "",
-  "bdd_host": "",
-  "bdd_username": "",
-  "bdd_password": "",
-  "bdd_name": "",
-  "bdd_dialect": "mariadb",
-  "bdd_operator_alias": false
-}
+It help the Raid Leader to manage points earned by players and item prices.
 
-Vous devez créer la base de donnée qui s'apelle DKP.
+The data was updated by a LUA file from a video game addon and imported in the web application.
 
-Pour créer les tables automatiquement, décommenter la ligne 47 du fichier models/index.js "sequelize.sync()" et 
-lancer la commande : node models/index.js
+Each players has its own point and every items in the game have its own price.
 
-Recommentez la ligne ensuite avant de lancer l'application.
+To reach the goal I used some cool features like :
 
-Ici les items sont stocker dans un fichier json donc vous devez les importez manuellement.
-
-Bien évidemment, il faut que sequilize puisse se connecter à votre BDD donc bien configurer le fichier de config.
-
-Une fois que votre BDD est paramétré avec vos tables lancer la commande node : src/test_data/insert_test_data.js pour pouvoir insérer les items.
-
-Puis vous pouvez lancer l'app avec la commande : node src/app.js
-
-
-
+- Express for the server
+- Handlebar for template rendering
+- PassportJs for the authentification rules
+- ORM Sequelize to manage data from database.
+- lua2json to generate JSON data from LUA file.
