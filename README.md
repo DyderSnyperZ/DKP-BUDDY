@@ -1,14 +1,12 @@
 # DKP-BUDDY
 
-Personnal project to deep understanding nodeJS and help a friend of mine.
+This is a personal project to deeply understand nodeJS and help my friend who is a Raid Leader of a guild from World of Warcraft game.
 
-The purpose was to create a web application tool to managing points earned by players from my personnal World of Warcraft guild.
+The purpose was to create a web application tool to manage points earned by players of World of Warcraft guild, display score to them and manage item prices.
 
-It help the Raid Leader to manage points earned by players and item prices.
+The data is updated by a LUA file from the game addon and imported in the web application.
 
-The data was updated by a LUA file from a video game addon and imported in the web application.
-
-Each players has its own point and every items in the game have its own price.
+Each player has its own points count and every item in the game have its own price.
 
 To reach the goal I used some cool features like :
 
