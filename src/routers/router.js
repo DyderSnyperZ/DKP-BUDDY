@@ -45,7 +45,7 @@ const Personnage = db.sequelize.models.Personnage
 const SuppressionPersonnage = db.sequelize.models.SuppressionPersonnage
 
 /* GET route homepage */
-router.get('/home', async function (req, res) {
+router.get('/', async function (req, res) {
 
     try {
         /* Récupère liste Personnage */
@@ -216,7 +216,7 @@ router.get('/items', async (req, res) => {
     } catch (error) {
         throw new Error ('Problème récupération items',error)
     }
-
+    
     /* Render la vue items */   
     res.render('items', {
         layout: 'layout',

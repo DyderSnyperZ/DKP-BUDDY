@@ -7,6 +7,8 @@ const path =  require('path')
 /* module gestion templating handlebars */
 const exphbs  = require('express-handlebars')
 
+const Handlebars = require('handlebars')
+
 /* définie fichier de routing */
 const router = require('./routers/router') 
 
@@ -26,6 +28,8 @@ const env_var = require('../config/env_var')
 /* génère l'instance du serveur */
 const app = express() 
 
+const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access')
+
 /* défini le chemin de fichier pour les assets */
 const publicDirectoryPath = path.join(__dirname, '../public')
 const uploadDirectoryPath = path.join(__dirname, '../')
@@ -34,6 +38,7 @@ const uploadDirectoryPath = path.join(__dirname, '../')
 const hbs = exphbs.create({
     extname: '.hbs',
     defaultLayout: 'layout',
+    handlebars: allowInsecurePrototypeAccess(Handlebars),
     helpers : {
         removeSpecialChar(value){
             return value.replace(/[^A-Za-z0-9]+/g, "")
